@@ -42,7 +42,7 @@ export function Header() {
         </Link>
 
         {/* Navigation - Center */}
-        <nav className="hidden lg:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 items-center gap-8 text-white font-sans text-sm font-medium tracking-widest uppercase">
+        <nav className="hidden lg:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 items-center gap-6 text-white font-sans text-sm font-medium tracking-widest uppercase">
           <Link href="/"><a className="hover:text-[#d48c5e] transition-colors">Home</a></Link>
           <Link href="/about"><a className="hover:text-[#d48c5e] transition-colors">Quem Somos</a></Link>
           <Link href="/services"><a className="hover:text-[#d48c5e] transition-colors">Serviços</a></Link>
@@ -67,11 +67,6 @@ export function Header() {
             <a href="#" className="hover:text-[#d48c5e] transition-colors"><Instagram className="w-4 h-4" /></a>
             <a href="#" className="hover:text-[#d48c5e] transition-colors"><Linkedin className="w-4 h-4" /></a>
             <a href="#" className="hover:text-[#d48c5e] transition-colors"><Youtube className="w-4 h-4" /></a>
-          </div>
-
-          <div className="flex items-center gap-2 border-l border-white/20 pl-4">
-            <img src="https://flagcdn.com/w40/br.png" alt="Português" className="w-5 h-auto rounded-sm opacity-100" />
-            <img src="https://flagcdn.com/w40/pt.png" alt="Portugal" className="w-5 h-auto rounded-sm opacity-50 hover:opacity-100 transition-opacity cursor-pointer" />
           </div>
         </div>
 
