@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { ListFilter } from "lucide-react";
 
-import heroBg from "@assets/generated_images/modern_luxury_apartment_building_exterior_at_sunset.png";
+import heroBg from "@/assets/luanda-hero.jpg";
 
 export function Hero() {
   return (
