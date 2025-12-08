@@ -30,8 +30,8 @@ export function Header() {
         <Link href="/">
           <a className="flex items-center gap-3 group">
             <img src={logo} alt="Angola Imobiliária" className="h-16 w-auto object-contain" />
-            <div className="flex flex-col text-white">
-              <span className="font-serif text-2xl leading-none tracking-wide">Angola Imobiliária</span>
+            <div className="flex flex-col text-white justify-center h-full">
+              <span className="font-sans text-lg font-bold tracking-widest uppercase">Angola Imobiliária</span>
             </div>
           </a>
         </Link>
