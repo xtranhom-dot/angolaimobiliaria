@@ -36,7 +36,7 @@ export function Header() {
               </div>
             </div>
             <div className="flex flex-col text-white">
-              <span className="font-serif text-2xl leading-none tracking-wide">Salomon Realty</span>
+              <span className="font-serif text-2xl leading-none tracking-wide">Angola Imobiliária</span>
             </div>
           </a>
         </Link>

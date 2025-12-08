@@ -27,7 +27,7 @@ export function Hero() {
             </defs>
             <text fontSize="11" fill="white">
                 <textPath xlinkHref="#circle" className="uppercase tracking-widest font-medium">
-                Salomon Realty • a arte de vender imóveis •
+                Angola Imobiliária • a arte de vender imóveis •
                 </textPath>
             </text>
             </svg>
@@ -48,7 +48,7 @@ export function Hero() {
           </div>
 
           <p className="text-white/80 text-sm font-light leading-relaxed max-w-lg">
-            Na Salomon Realty, oferecemos uma experiência de compra e venda de imóveis inovadora, disruptiva e personalizada, unindo segurança e transparência com o uso de tecnologia e IA.
+            Na Angola Imobiliária, oferecemos uma experiência de compra e venda de imóveis inovadora, disruptiva e personalizada, unindo segurança e transparência com o uso de tecnologia e IA.
           </p>
 
           {/* Search Box - Floating Card */}

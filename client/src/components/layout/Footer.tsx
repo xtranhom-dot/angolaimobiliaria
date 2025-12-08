@@ -37,7 +37,7 @@ export function Footer() {
                   </div>
                 </div>
                 <div className="flex flex-col text-white">
-                  <span className="font-serif text-2xl leading-none tracking-wide">Salomon Realty</span>
+                  <span className="font-serif text-2xl leading-none tracking-wide">Angola Imobiliária</span>
                 </div>
               </a>
             </Link>
@@ -115,7 +115,7 @@ export function Footer() {
         </div>
 
         <div className="border-t border-white/10 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-white/40 font-sans gap-4">
-          <p>© 2024 - Salomon Realty - Todos os direitos reservados.</p>
+          <p>© 2024 - Angola Imobiliária - Todos os direitos reservados.</p>
           <a href="#" className="hover:text-white">Política de Privacidade</a>
         </div>
       </div>

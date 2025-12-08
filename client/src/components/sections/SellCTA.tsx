@@ -21,7 +21,7 @@ export function SellCTA() {
                 <h2 className="font-serif text-4xl text-white font-medium">Quer vender um imóvel?</h2>
                 <div className="space-y-4 text-white/80 text-sm font-light leading-relaxed">
                    <p>
-                      A Salomon Realty está totalmente comprometida em garantir que o seu imóvel seja vendido da forma mais eficiente possível.
+                      A Angola Imobiliária está totalmente comprometida em garantir que o seu imóvel seja vendido da forma mais eficiente possível.
                    </p>
                    <p>
                       Investimos constantemente nas mais recentes tecnologias inovadoras para destacar e valorizar o seu imóvel, garantindo ampla visibilidade no mercado.

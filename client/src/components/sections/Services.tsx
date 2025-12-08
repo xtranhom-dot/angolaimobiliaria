@@ -10,7 +10,7 @@ export function Services() {
         <div className="text-center max-w-2xl mx-auto mb-16 space-y-4">
           <h2 className="font-serif text-4xl text-[hsl(350,85%,15%)] font-medium">Conheça os nossos serviços</h2>
           <p className="text-gray-500 text-sm leading-relaxed">
-            Sempre em busca do que há de melhor e mais moderno no mercado imobiliário, a Salomon Realty possui ferramentas e tecnologias que contribuem no processo de compra e venda, além de valorizar o seu imóvel.
+            Sempre em busca do que há de melhor e mais moderno no mercado imobiliário, a Angola Imobiliária possui ferramentas e tecnologias que contribuem no processo de compra e venda, além de valorizar o seu imóvel.
           </p>
         </div>
 
