@@ -38,21 +38,21 @@ export function Hero() {
             </div>
         </div>
 
-        <div className="max-w-2xl space-y-6 animate-in slide-in-from-left duration-700">
+        <div className="max-w-2xl space-y-5 animate-in slide-in-from-left duration-700">
           <div className="relative">
-             <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-medium text-white leading-[1.1]">
+             <h1 className="font-serif text-3xl md:text-4xl lg:text-5xl font-medium text-white leading-[1.1]">
               Seja bem-vindo a <br />
               uma nova Experiência <br />
               <span className="font-bold">Imobiliária</span>
             </h1>
           </div>
 
-          <p className="text-white/80 text-base font-light leading-relaxed max-w-lg">
+          <p className="text-white/80 text-sm font-light leading-relaxed max-w-lg">
             Na Salomon Realty, oferecemos uma experiência de compra e venda de imóveis inovadora, disruptiva e personalizada, unindo segurança e transparência com o uso de tecnologia e IA.
           </p>
 
           {/* Search Box - Floating Card */}
-          <div className="bg-white rounded-lg shadow-2xl p-4 md:p-6 mt-8 w-[120%] -ml-[10%] lg:w-[140%] lg:ml-0 max-w-[1200px]">
+          <div className="bg-white rounded-lg shadow-2xl p-4 md:p-6 mt-6 w-[120%] -ml-[10%] lg:w-[140%] lg:ml-0 max-w-[1200px]">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 items-end">
               <div className="space-y-1">
                 <label className="text-xs font-bold uppercase tracking-widest text-[hsl(350,85%,15%)]">Tipo de Negócios</label>
