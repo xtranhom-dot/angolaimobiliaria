@@ -34,7 +34,7 @@ export function Header() {
         </Link>
 
         {/* Navigation - Center */}
-        <nav className="hidden lg:flex items-center gap-6 ml-16 text-[#d48c5e] font-sans text-sm font-medium tracking-widest uppercase mb-4">
+        <nav className="hidden lg:flex items-center gap-6 ml-16 text-[#FFD700] font-sans text-sm font-medium tracking-widest uppercase mb-4">
           <Link href="/"><a className="hover:text-white transition-colors">Home</a></Link>
           <Link href="/about"><a className="hover:text-white transition-colors">Quem Somos</a></Link>
           <Link href="/services"><a className="hover:text-white transition-colors">Serviços</a></Link>
@@ -45,7 +45,7 @@ export function Header() {
         {/* Right Side - Top Right */}
         <div className="hidden lg:flex items-center gap-6 ml-auto text-white text-xs font-sans tracking-wide mb-4">
            <div className="flex items-center gap-2">
-            <div className="bg-[#d48c5e] rounded-full p-1">
+            <div className="bg-[#FFD700] rounded-full p-1">
               <Phone className="w-3 h-3 text-white" />
             </div>
             <div className="flex flex-col leading-tight">

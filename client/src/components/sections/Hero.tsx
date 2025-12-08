@@ -4,6 +4,8 @@ import { ListFilter } from "lucide-react";
 
 import heroBg from "@/assets/luanda-hero.jpg";
 
+import logo from "@assets/Design_sem_nome-removebg-preview_1_1765217810301.png";
+
 export function Hero() {
   return (
     <section className="relative min-h-[90vh] flex items-center pt-32 pb-20 overflow-hidden">
@@ -21,20 +23,8 @@ export function Hero() {
       <div className="container mx-auto px-4 relative z-20 grid lg:grid-cols-2 gap-12 items-center">
         {/* Circular Badge - Centered in Hero */}
         <div className="absolute left-1/2 top-1/3 -translate-x-1/2 -translate-y-1/2 z-30 hidden lg:flex items-center justify-center w-40 h-40 rounded-full border border-white/20 animate-spin-slow pointer-events-none">
-            <svg viewBox="0 0 100 100" className="w-full h-full absolute animate-[spin_10s_linear_infinite]">
-            <defs>
-                <path id="circle" d="M 50, 50 m -37, 0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0" />
-            </defs>
-            <text fontSize="11" fill="white">
-                <textPath xlinkHref="#circle" className="uppercase tracking-widest font-medium">
-                Angola Imobiliária • a arte de vender imóveis •
-                </textPath>
-            </text>
-            </svg>
-            <div className="w-16 h-16 border-2 border-[#d48c5e] rotate-45 flex items-center justify-center">
-                <div className="w-10 h-10 border border-[#d48c5e] flex items-center justify-center">
-                <span className="text-[#d48c5e] font-serif text-2xl">S</span>
-                </div>
+            <div className="w-32 h-32 flex items-center justify-center">
+                <img src={logo} alt="Angola Imobiliária" className="w-full h-full object-contain" />
             </div>
         </div>
 
