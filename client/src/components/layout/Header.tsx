@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
 import { cn } from "@/lib/utils";
 
-import logo from "@assets/Design_sem_nome-removebg-preview_1765217312472.png";
+import logo from "@assets/Design_sem_nome-removebg-preview_1_1765217810301.png";
 
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
