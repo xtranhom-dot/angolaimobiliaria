@@ -14,6 +14,7 @@ import AdminPropertyForm from "@/pages/admin/property-form";
 import AdminLocations from "@/pages/admin/locations";
 import AdminMessages from "@/pages/admin/messages";
 import AdminSettings from "@/pages/admin/settings";
+import AdminLogin from "@/pages/admin/login";
 
 function Router() {
   return (
@@ -22,7 +23,9 @@ function Router() {
       <Route path="/property/:id" component={PropertyDetails} />
       
       {/* Admin Routes */}
-      <Route path="/admin" component={AdminDashboard} />
+      <Route path="/admin" component={AdminLogin} />
+      <Route path="/admin/login" component={AdminLogin} />
+      <Route path="/admin/dashboard" component={AdminDashboard} />
       <Route path="/admin/properties" component={AdminProperties} />
       <Route path="/admin/properties/new" component={AdminPropertyForm} />
       <Route path="/admin/locations" component={AdminLocations} />
