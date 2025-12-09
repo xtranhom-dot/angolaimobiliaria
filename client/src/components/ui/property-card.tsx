@@ -25,12 +25,12 @@ export function PropertyCard({ property }: { property: PropertyProps }) {
           className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
         />
         {property.status && (
-          <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-3 py-1 text-xs font-bold uppercase tracking-widest text-[hsl(350,85%,15%)]">
+          <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-3 py-1 text-xs font-bold uppercase tracking-widest text-black">
             {property.status}
           </div>
         )}
-        <div className="absolute top-4 right-4 bg-[hsl(350,85%,15%)]/80 p-2 text-white rounded-sm">
-          <div className="w-4 h-4 border border-white/50" />
+        <div className="absolute top-4 right-4 bg-[#FFD700] p-2 text-black rounded-sm shadow-sm">
+          <div className="w-4 h-4 border border-black/50" />
         </div>
       </div>
 
@@ -39,7 +39,7 @@ export function PropertyCard({ property }: { property: PropertyProps }) {
           <MapPin className="w-4 h-4" />
           <span className="text-xs font-medium uppercase tracking-wide">{property.location}</span>
         </div>
-        <h3 className="font-serif text-lg font-bold leading-tight text-[hsl(350,85%,10%)] line-clamp-2 min-h-[3rem]">
+        <h3 className="font-serif text-lg font-bold leading-tight text-black line-clamp-2 min-h-[3rem]">
           {property.title}
         </h3>
       </CardHeader>
@@ -63,12 +63,12 @@ export function PropertyCard({ property }: { property: PropertyProps }) {
       <CardFooter className="p-6 pt-4 border-t border-gray-100 flex items-center justify-between">
         <div>
           <span className="block text-xs text-gray-400 font-medium uppercase">Valor</span>
-          <span className="font-serif text-xl font-bold text-[hsl(350,85%,15%)]">
+          <span className="font-serif text-xl font-bold text-black">
             {new Intl.NumberFormat('pt-AO', { style: 'currency', currency: 'AOA' }).format(property.price)}
           </span>
         </div>
         <Link href={`/property/${property.id}`}>
-          <a className="text-xs font-bold uppercase tracking-widest text-[hsl(350,85%,15%)] hover:text-[#d48c5e] border-b border-[hsl(350,85%,15%)] hover:border-[#d48c5e] transition-colors pb-0.5">
+          <a className="text-xs font-bold uppercase tracking-widest text-black hover:text-[#d48c5e] border-b-2 border-[#FFD700] hover:border-[#d48c5e] transition-colors pb-0.5">
             Ver Detalhes
           </a>
         </Link>
