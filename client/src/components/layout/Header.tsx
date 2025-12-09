@@ -50,7 +50,7 @@ export function Header() {
             </div>
             <div className="flex flex-col leading-tight">
               <span className="opacity-80 text-[10px]">WHATSAPP</span>
-              <span className="font-bold">(47) 9.9241-5996</span>
+              <span className="font-bold">+244 927 963 478</span>
             </div>
           </div>
           

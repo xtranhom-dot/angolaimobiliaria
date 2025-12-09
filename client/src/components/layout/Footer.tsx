@@ -2,6 +2,7 @@ import { Phone, Mail, Facebook, Instagram, Linkedin, Youtube, ArrowRight } from 
 import { Link } from "wouter";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import logo from "@assets/Design_sem_nome-removebg-preview_1_1765217810301.png";
 
 export function Footer() {
   return (
@@ -27,18 +28,8 @@ export function Footer() {
           {/* Brand */}
           <div className="space-y-6">
             <Link href="/">
-              <a className="flex items-center gap-3 group">
-                <div className="border-2 border-white p-1 rounded-sm">
-                  <div className="grid grid-cols-2 gap-0.5">
-                    <div className="w-2 h-2 bg-white rounded-tl-sm"></div>
-                    <div className="w-2 h-2 border border-white rounded-tr-sm"></div>
-                    <div className="w-2 h-2 border border-white rounded-bl-sm"></div>
-                    <div className="w-2 h-2 bg-white rounded-br-sm"></div>
-                  </div>
-                </div>
-                <div className="flex flex-col text-white">
-                  <span className="font-serif text-2xl leading-none tracking-wide">Angola Imobiliária</span>
-                </div>
+              <a className="flex items-end gap-3 group">
+                <img src={logo} alt="Angola Imobiliária" className="h-16 w-auto object-contain brightness-0 invert" />
               </a>
             </Link>
             
@@ -60,7 +51,7 @@ export function Footer() {
               </div>
               <div className="flex flex-col">
                 <span className="text-xs text-white/60 uppercase">Whatsapp</span>
-                <span className="text-lg font-serif">(47) 9.9241-5996</span>
+                <span className="text-lg font-serif">+244 953 430 432</span>
               </div>
             </div>
 
