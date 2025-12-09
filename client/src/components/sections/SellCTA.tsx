@@ -3,15 +3,15 @@ import sellImage from "@assets/generated_images/modern_luxury_apartment_building
 
 export function SellCTA() {
   return (
-    <section className="py-24 relative overflow-hidden flex items-center bg-[hsl(350,85%,10%)]">
+    <section className="py-24 relative overflow-hidden flex items-center bg-black">
        {/* Background Image Container */}
       <div className="absolute inset-0 w-full h-full z-0">
          <img src={sellImage} alt="Sell Property" className="w-full h-full object-cover opacity-40" />
-         <div className="absolute inset-0 bg-gradient-to-r from-[hsl(350,85%,10%)] via-[hsl(350,85%,10%)]/90 to-[hsl(350,85%,10%)]/40" />
+         <div className="absolute inset-0 bg-gradient-to-r from-black via-black/90 to-black/40" />
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
-        <div className="max-w-4xl bg-[hsl(350,85%,15%)]/90 backdrop-blur-md p-10 md:p-16 rounded-lg border border-white/10 shadow-2xl">
+        <div className="max-w-4xl bg-black/80 backdrop-blur-md p-10 md:p-16 rounded-lg border border-white/10 shadow-2xl">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
              <div className="aspect-square rounded-lg overflow-hidden relative shadow-lg hidden lg:block">
                 <img src="/attached_assets/generated_images/modern_house_with_pool_exterior.png" className="w-full h-full object-cover" />

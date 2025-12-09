@@ -38,7 +38,7 @@ export function Hero() {
           <div className="bg-white rounded-lg shadow-2xl p-4 md:p-6 mt-6 w-[120%] -ml-[10%] lg:w-[140%] lg:ml-0 max-w-[1200px]">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 items-end">
               <div className="space-y-1">
-                <label className="text-xs font-bold uppercase tracking-widest text-[hsl(350,85%,15%)]">Tipo de Negócios</label>
+                <label className="text-xs font-bold uppercase tracking-widest text-[#FFD700]">Tipo de Negócios</label>
                 <Select>
                   <SelectTrigger className="w-full border-gray-200 bg-gray-50/50">
                     <SelectValue placeholder="Selecione..." />
@@ -51,7 +51,7 @@ export function Hero() {
               </div>
 
               <div className="space-y-1">
-                <label className="text-xs font-bold uppercase tracking-widest text-[hsl(350,85%,15%)]">Tipo de Imóveis</label>
+                <label className="text-xs font-bold uppercase tracking-widest text-[#FFD700]">Tipo de Imóveis</label>
                 <Select>
                   <SelectTrigger className="w-full border-gray-200 bg-gray-50/50">
                     <SelectValue placeholder="Selecione..." />
@@ -65,7 +65,7 @@ export function Hero() {
               </div>
 
               <div className="space-y-1">
-                <label className="text-xs font-bold uppercase tracking-widest text-[hsl(350,85%,15%)]">Cidade</label>
+                <label className="text-xs font-bold uppercase tracking-widest text-[#FFD700]">Cidade</label>
                 <Select>
                   <SelectTrigger className="w-full border-gray-200 bg-gray-50/50">
                     <SelectValue placeholder="Selecione a Cidade" />
@@ -79,7 +79,7 @@ export function Hero() {
               </div>
 
               <div className="space-y-1">
-                <label className="text-xs font-bold uppercase tracking-widest text-[hsl(350,85%,15%)]">Bairro</label>
+                <label className="text-xs font-bold uppercase tracking-widest text-[#FFD700]">Bairro</label>
                 <Select>
                   <SelectTrigger className="w-full border-gray-200 bg-gray-50/50">
                     <SelectValue placeholder="Selecione o Bairro" />

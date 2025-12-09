@@ -2,9 +2,9 @@ import teamImage from "@assets/generated_images/professional_real_estate_team_of
 
 export function About() {
   return (
-    <section className="py-24 bg-[hsl(350,85%,10%)] text-white overflow-hidden relative">
+    <section className="py-24 bg-black text-white overflow-hidden relative">
       {/* Background decoration */}
-      <div className="absolute top-0 right-0 w-1/2 h-full bg-[hsl(350,85%,15%)]/50 -skew-x-12 translate-x-1/4 z-0" />
+      <div className="absolute top-0 right-0 w-1/2 h-full bg-[#FFD700]/10 -skew-x-12 translate-x-1/4 z-0" />
 
       <div className="container mx-auto px-4 relative z-10">
         <div className="grid lg:grid-cols-2 gap-16 items-center">

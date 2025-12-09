@@ -10,8 +10,8 @@ export function Stats() {
             <div className="mb-4 text-[#d48c5e]">
                <Users className="w-12 h-12 stroke-1" />
             </div>
-            <h3 className="font-serif text-4xl font-bold text-[hsl(350,85%,15%)] mb-1">+184</h3>
-            <p className="text-[hsl(350,85%,15%)] font-bold uppercase text-xs tracking-widest">Clientes Satisfeitos</p>
+            <h3 className="font-serif text-4xl font-bold text-black mb-1">+184</h3>
+            <p className="text-black font-bold uppercase text-xs tracking-widest">Clientes Satisfeitos</p>
           </div>
 
           {/* Card 2 */}
@@ -19,8 +19,8 @@ export function Stats() {
             <div className="mb-4 text-[#d48c5e]">
                <TrendingUp className="w-12 h-12 stroke-1" />
             </div>
-            <h3 className="font-serif text-4xl font-bold text-[hsl(350,85%,15%)] mb-1">+86 Milhões</h3>
-            <p className="text-[hsl(350,85%,15%)] font-bold uppercase text-xs tracking-widest">Em Vendas (Kz)</p>
+            <h3 className="font-serif text-4xl font-bold text-black mb-1">+86 Milhões</h3>
+            <p className="text-black font-bold uppercase text-xs tracking-widest">Em Vendas (Kz)</p>
           </div>
         </div>
       </div>

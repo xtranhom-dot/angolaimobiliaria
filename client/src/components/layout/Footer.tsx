@@ -5,10 +5,10 @@ import { Button } from "@/components/ui/button";
 
 export function Footer() {
   return (
-    <footer className="bg-[hsl(350,85%,10%)] text-white pt-10 border-t border-white/10">
+    <footer className="bg-black text-white pt-10 border-t border-white/10">
       {/* Social Banner */}
       <div className="container mx-auto px-4 -mt-24 mb-16 relative z-10">
-        <div className="bg-white text-[hsl(350,85%,15%)] rounded-lg p-6 shadow-xl flex flex-col md:flex-row items-center justify-between gap-6 max-w-4xl mx-auto">
+        <div className="bg-white text-black rounded-lg p-6 shadow-xl flex flex-col md:flex-row items-center justify-between gap-6 max-w-4xl mx-auto">
           <div className="flex flex-col">
             <span className="text-sm text-gray-500 uppercase tracking-widest">Siga-nos nas</span>
             <span className="font-serif text-3xl font-bold">Redes Sociais</span>
@@ -96,7 +96,7 @@ export function Footer() {
                   placeholder="Digite seu Melhor E-mail" 
                   className="border-0 bg-transparent text-white placeholder:text-white/40 focus-visible:ring-0"
                 />
-                <Button className="bg-[hsl(350,85%,25%)] hover:bg-[hsl(350,85%,35%)] text-white uppercase text-xs font-bold tracking-widest rounded-sm">
+                <Button className="bg-[#FFD700] hover:bg-[#e6c200] text-black uppercase text-xs font-bold tracking-widest rounded-sm">
                   Assinar
                 </Button>
               </div>

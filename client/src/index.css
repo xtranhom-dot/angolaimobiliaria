@@ -59,12 +59,12 @@
   --popover: 0 0% 100%;
   --popover-foreground: 355 60% 10%;
 
-  /* The main brand color - Deep Red */
-  --primary: 350 85% 15%; /* Deep Burgundy */
-  --primary-foreground: 0 0% 100%;
+  /* The main brand color - Gold (from Header) */
+  --primary: 48 100% 50%;
+  --primary-foreground: 0 0% 0%;
 
-  /* The accent color - Gold/Copper */
-  --secondary: 25 60% 60%; /* Copper/Gold */
+  /* The accent color - Deep Black/Dark Grey */
+  --secondary: 0 0% 10%;
   --secondary-foreground: 0 0% 100%;
 
   --muted: 350 10% 96%;

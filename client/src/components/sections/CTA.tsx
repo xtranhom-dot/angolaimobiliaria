@@ -7,13 +7,13 @@ export function CTA() {
         <div className="bg-[#fcfcfc] rounded-2xl p-8 md:p-12 lg:p-0 flex flex-col lg:flex-row items-center gap-12 lg:gap-0 overflow-hidden shadow-2xl">
           
           <div className="flex-1 lg:p-20 space-y-6 text-center lg:text-left">
-            <div className="w-20 h-20 mx-auto lg:mx-0 border-2 border-[hsl(350,85%,15%)] p-2 rounded-full mb-6">
-               <div className="w-full h-full border border-[hsl(350,85%,15%)] rounded-full flex items-center justify-center">
-                  <span className="font-serif text-3xl text-[hsl(350,85%,15%)]">SR</span>
+            <div className="w-20 h-20 mx-auto lg:mx-0 border-2 border-[#FFD700] p-2 rounded-full mb-6">
+               <div className="w-full h-full border border-[#FFD700] rounded-full flex items-center justify-center">
+                  <span className="font-serif text-3xl text-black">SR</span>
                </div>
             </div>
             
-            <h2 className="font-serif text-4xl md:text-5xl text-[hsl(350,85%,15%)] leading-tight">
+            <h2 className="font-serif text-4xl md:text-5xl text-black leading-tight">
               Você precisa falar <br/>
               com um especialista?
             </h2>

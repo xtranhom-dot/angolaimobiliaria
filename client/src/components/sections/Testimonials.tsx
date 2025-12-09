@@ -24,7 +24,7 @@ const TESTIMONIALS = [
 
 export function Testimonials() {
   return (
-    <section className="py-24 bg-[hsl(350,85%,10%)] text-white relative">
+    <section className="py-24 bg-black text-white relative">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="font-serif text-4xl text-white font-medium">Depoimentos</h2>

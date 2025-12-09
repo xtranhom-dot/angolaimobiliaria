@@ -73,12 +73,12 @@ export function Header() {
 
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
-        <div className="absolute top-full left-0 w-full bg-[hsl(350,85%,15%)] border-t border-white/10 p-6 flex flex-col gap-4 lg:hidden animate-in slide-in-from-top-5">
-          <Link href="/"><a className="text-white hover:text-[#d48c5e] py-2 uppercase tracking-widest text-sm">Home</a></Link>
-          <Link href="/about"><a className="text-white hover:text-[#d48c5e] py-2 uppercase tracking-widest text-sm">Quem Somos</a></Link>
-          <Link href="/services"><a className="text-white hover:text-[#d48c5e] py-2 uppercase tracking-widest text-sm">Serviços</a></Link>
-          <Link href="/properties"><a className="text-white hover:text-[#d48c5e] py-2 uppercase tracking-widest text-sm">Imóveis</a></Link>
-          <Link href="/contact"><a className="text-white hover:text-[#d48c5e] py-2 uppercase tracking-widest text-sm">Contato</a></Link>
+        <div className="absolute top-full left-0 w-full bg-black border-t border-white/10 p-6 flex flex-col gap-4 lg:hidden animate-in slide-in-from-top-5">
+          <Link href="/"><a className="text-[#FFD700] hover:text-white py-2 uppercase tracking-widest text-sm">Home</a></Link>
+          <Link href="/about"><a className="text-[#FFD700] hover:text-white py-2 uppercase tracking-widest text-sm">Quem Somos</a></Link>
+          <Link href="/services"><a className="text-[#FFD700] hover:text-white py-2 uppercase tracking-widest text-sm">Serviços</a></Link>
+          <Link href="/properties"><a className="text-[#FFD700] hover:text-white py-2 uppercase tracking-widest text-sm">Imóveis</a></Link>
+          <Link href="/contact"><a className="text-[#FFD700] hover:text-white py-2 uppercase tracking-widest text-sm">Contato</a></Link>
         </div>
       )}
     </header>

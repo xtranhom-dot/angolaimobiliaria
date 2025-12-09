@@ -77,7 +77,7 @@ export function Properties() {
     <section className="py-20 bg-[#fafafa]">
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center mb-10">
-          <p className="text-[hsl(350,85%,15%)] font-medium text-sm">
+          <p className="text-gray-600 font-medium text-sm">
             Mostrando {PROPERTIES.length} de 67 resultados.
           </p>
         </div>
@@ -89,7 +89,7 @@ export function Properties() {
         </div>
         
         <div className="flex justify-center mt-12">
-            <Button variant="outline" className="border-[hsl(350,85%,15%)] text-[hsl(350,85%,15%)] hover:bg-[hsl(350,85%,15%)] hover:text-white uppercase tracking-widest text-xs font-bold px-8 py-6">
+            <Button variant="outline" className="border-[#FFD700] text-black hover:bg-[#FFD700] hover:text-black uppercase tracking-widest text-xs font-bold px-8 py-6">
                 Carregar Mais Imóveis
             </Button>
         </div>
