@@ -74,7 +74,7 @@ const PROPERTIES: PropertyProps[] = [
 
 export function Properties() {
   return (
-    <section className="py-20 bg-[#fafafa]">
+    <section id="properties" className="py-20 bg-[#fafafa]">
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center mb-10">
           <p className="text-gray-600 font-medium text-sm">

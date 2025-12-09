@@ -52,7 +52,7 @@ export function Header() {
           <a href="/#home" onClick={(e) => handleScrollToSection(e, "home")} className="hover:text-white transition-colors cursor-pointer">Home</a>
           <a href="/#about" onClick={(e) => handleScrollToSection(e, "about")} className="hover:text-white transition-colors cursor-pointer">Quem Somos</a>
           <Link href="/services"><a className="hover:text-white transition-colors">Serviços</a></Link>
-          <Link href="/properties"><a className="hover:text-white transition-colors">Imóveis</a></Link>
+          <a href="/#properties" onClick={(e) => handleScrollToSection(e, "properties")} className="hover:text-white transition-colors cursor-pointer">Imóveis</a>
           <Link href="/contact"><a className="hover:text-white transition-colors">Contato</a></Link>
         </nav>
 
@@ -63,7 +63,6 @@ export function Header() {
               <Phone className="w-3 h-3 text-white" />
             </div>
             <div className="flex flex-col leading-tight">
-              <span className="opacity-80 text-[10px]">WHATSAPP</span>
               <span className="font-bold">+244 927 963 478</span>
             </div>
           </div>
@@ -91,7 +90,7 @@ export function Header() {
           <a href="/#home" onClick={(e) => handleScrollToSection(e, "home")} className="text-[#FFD700] hover:text-white py-2 uppercase tracking-widest text-sm cursor-pointer">Home</a>
           <a href="/#about" onClick={(e) => handleScrollToSection(e, "about")} className="text-[#FFD700] hover:text-white py-2 uppercase tracking-widest text-sm cursor-pointer">Quem Somos</a>
           <Link href="/services"><a className="text-[#FFD700] hover:text-white py-2 uppercase tracking-widest text-sm">Serviços</a></Link>
-          <Link href="/properties"><a className="text-[#FFD700] hover:text-white py-2 uppercase tracking-widest text-sm">Imóveis</a></Link>
+          <a href="/#properties" onClick={(e) => handleScrollToSection(e, "properties")} className="text-[#FFD700] hover:text-white py-2 uppercase tracking-widest text-sm cursor-pointer">Imóveis</a>
           <Link href="/contact"><a className="text-[#FFD700] hover:text-white py-2 uppercase tracking-widest text-sm">Contato</a></Link>
         </div>
       )}
