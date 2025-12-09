@@ -7,6 +7,7 @@ import {
   LogOut, 
   Plus,
   Users,
+  MapPin,
   MessageSquare
 } from "lucide-react";
 import logo from "@assets/Design_sem_nome-removebg-preview_1_1765217810301.png";
@@ -19,6 +20,7 @@ export function AdminLayout({ children }: { children: React.ReactNode }) {
     { icon: Building2, label: "Imóveis", href: "/admin/properties" },
     { icon: Users, label: "Clientes", href: "/admin/clients" },
     { icon: MessageSquare, label: "Mensagens", href: "/admin/messages" },
+    { icon: MapPin, label: "Localizações", href: "/admin/locations" },
     { icon: Settings, label: "Configurações", href: "/admin/settings" },
   ];
 
