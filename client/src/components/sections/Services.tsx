@@ -1,41 +1,46 @@
 import { Camera, BarChart3, Home, Key, ClipboardCheck, Hammer, FileText } from "lucide-react";
+import salesImage from "@assets/generated_images/real_estate_sales_concept_with_luxury_home.png";
+import rentalImage from "@assets/generated_images/real_estate_rental_concept_with_keys.png";
+import appraisalImage from "@assets/generated_images/real_estate_appraisal_concept.png";
+import maintenanceImage from "@assets/generated_images/property_maintenance_concept.png";
+import plansImage from "@assets/generated_images/architectural_floor_plans.png";
 
 const services = [
   {
     title: "Vendas de imóveis",
     description: "Encontre o imóvel dos seus sonhos ou venda o seu com a máxima eficiência e segurança, com o apoio da nossa equipa especializada.",
-    image: "/attached_assets/generated_images/real_estate_sales_concept_with_luxury_home.png",
+    image: salesImage,
     icon: Home
   },
   {
     title: "Arrendamentos de imóveis",
     description: "Opções variadas de arrendamento residencial e comercial para quem busca flexibilidade, conforto e as melhores localizações.",
-    image: "/attached_assets/generated_images/real_estate_rental_concept_with_keys.png",
+    image: rentalImage,
     icon: Key
   },
   {
     title: "Avaliação de imóveis",
     description: "Avaliação precisa e técnica do seu imóvel para garantir o preço justo de mercado, fundamental para vendas e seguros.",
-    image: "/attached_assets/generated_images/real_estate_appraisal_concept.png",
+    image: appraisalImage,
     icon: ClipboardCheck
   },
   {
     title: "Manutenção de Imóveis",
     description: "Serviços completos de manutenção preventiva e corretiva para valorizar, conservar e garantir a longevidade do seu patrimônio.",
-    image: "/attached_assets/generated_images/property_maintenance_concept.png",
+    image: maintenanceImage,
     icon: Hammer
   },
   {
     title: "Plantas de Imóveis",
     description: "Desenvolvimento e análise técnica de plantas arquitetônicas para legalização, reformas ou novas construções.",
-    image: "/attached_assets/generated_images/architectural_floor_plans.png",
+    image: plansImage,
     icon: FileText
   }
 ];
 
 export function Services() {
   return (
-    <section className="py-24 bg-white relative overflow-hidden">
+    <section id="services" className="py-24 bg-white relative overflow-hidden">
         {/* Diamond pattern background subtle */}
         <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(#FFD700 1px, transparent 1px)', backgroundSize: '30px 30px' }}></div>
 
