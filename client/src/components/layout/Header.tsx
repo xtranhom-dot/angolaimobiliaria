@@ -19,14 +19,16 @@ export function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const handleScrollToAbout = (e: React.MouseEvent) => {
+  const handleScrollToSection = (e: React.MouseEvent, id: string) => {
     e.preventDefault();
     if (location !== "/") {
-      window.location.href = "/#about";
+      window.location.href = `/#${id}`;
     } else {
-      const element = document.getElementById("about");
+      const element = document.getElementById(id);
       if (element) {
         element.scrollIntoView({ behavior: "smooth" });
+      } else if (id === "home") {
+        window.scrollTo({ top: 0, behavior: "smooth" });
       }
     }
     setIsMobileMenuOpen(false);
@@ -41,16 +43,14 @@ export function Header() {
     >
       <div className={cn("container mx-auto px-4 flex items-end relative transition-all duration-300", isScrolled ? "h-14" : "h-20")}>
         {/* Logo - Aligned Left */}
-        <Link href="/">
-          <a className="flex items-end gap-3 group h-full">
-            <img src={logo} alt="Angola Imobiliária" className="h-12 md:h-14 w-auto object-contain" />
-          </a>
-        </Link>
+        <a href="/" onClick={(e) => handleScrollToSection(e, "home")} className="flex items-end gap-3 group h-full cursor-pointer">
+          <img src={logo} alt="Angola Imobiliária" className="h-12 md:h-14 w-auto object-contain" />
+        </a>
 
         {/* Navigation - Center */}
         <nav className="hidden lg:flex items-center gap-6 ml-16 text-[#FFD700] font-sans text-sm font-medium tracking-widest uppercase mb-4">
-          <Link href="/"><a className="hover:text-white transition-colors">Home</a></Link>
-          <a href="/#about" onClick={handleScrollToAbout} className="hover:text-white transition-colors cursor-pointer">Quem Somos</a>
+          <a href="/#home" onClick={(e) => handleScrollToSection(e, "home")} className="hover:text-white transition-colors cursor-pointer">Home</a>
+          <a href="/#about" onClick={(e) => handleScrollToSection(e, "about")} className="hover:text-white transition-colors cursor-pointer">Quem Somos</a>
           <Link href="/services"><a className="hover:text-white transition-colors">Serviços</a></Link>
           <Link href="/properties"><a className="hover:text-white transition-colors">Imóveis</a></Link>
           <Link href="/contact"><a className="hover:text-white transition-colors">Contato</a></Link>
@@ -88,8 +88,8 @@ export function Header() {
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
         <div className="absolute top-full left-0 w-full bg-black border-t border-white/10 p-6 flex flex-col gap-4 lg:hidden animate-in slide-in-from-top-5">
-          <Link href="/"><a className="text-[#FFD700] hover:text-white py-2 uppercase tracking-widest text-sm">Home</a></Link>
-          <a href="/#about" onClick={handleScrollToAbout} className="text-[#FFD700] hover:text-white py-2 uppercase tracking-widest text-sm cursor-pointer">Quem Somos</a>
+          <a href="/#home" onClick={(e) => handleScrollToSection(e, "home")} className="text-[#FFD700] hover:text-white py-2 uppercase tracking-widest text-sm cursor-pointer">Home</a>
+          <a href="/#about" onClick={(e) => handleScrollToSection(e, "about")} className="text-[#FFD700] hover:text-white py-2 uppercase tracking-widest text-sm cursor-pointer">Quem Somos</a>
           <Link href="/services"><a className="text-[#FFD700] hover:text-white py-2 uppercase tracking-widest text-sm">Serviços</a></Link>
           <Link href="/properties"><a className="text-[#FFD700] hover:text-white py-2 uppercase tracking-widest text-sm">Imóveis</a></Link>
           <Link href="/contact"><a className="text-[#FFD700] hover:text-white py-2 uppercase tracking-widest text-sm">Contato</a></Link>

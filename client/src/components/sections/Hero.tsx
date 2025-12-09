@@ -7,7 +7,7 @@ import heroBg from "@/assets/luanda-hero.jpg";
 
 export function Hero() {
   return (
-    <section className="relative min-h-[90vh] flex items-center pt-32 pb-20 overflow-hidden">
+    <section id="home" className="relative min-h-[90vh] flex items-center pt-32 pb-20 overflow-hidden">
       {/* Background with Gradient Overlay */}
       <div className="absolute inset-0 z-0">
         <img 
