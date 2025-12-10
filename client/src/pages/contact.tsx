@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { Button } from "@/components/ui/button";
@@ -8,6 +9,33 @@ import { Phone, Mail, MapPin, Clock, Send } from "lucide-react";
 import contactHero from "@assets/generated_images/luxury_real_estate_office_reception.png";
 
 export default function Contact() {
+  const [formData, setFormData] = useState({
+    name: "",
+    phone: "",
+    email: "",
+    subject: "",
+    message: ""
+  });
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { id, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [id]: value
+    }));
+  };
+
+  const handleSendMessage = (e: React.FormEvent) => {
+    e.preventDefault();
+    const { name, phone, email, subject, message } = formData;
+    
+    // Format message for WhatsApp
+    const text = `*Nova Mensagem do Site*%0A%0A*Nome:* ${name}%0A*Telefone:* ${phone}%0A*Email:* ${email}%0A*Assunto:* ${subject}%0A*Mensagem:* ${message}`;
+    
+    // Open WhatsApp
+    window.open(`https://wa.me/244953430432?text=${text}`, '_blank');
+  };
+
   return (
     <div className="min-h-screen flex flex-col font-sans">
       <Header />
@@ -111,26 +139,55 @@ export default function Contact() {
                 <h2 className="font-serif text-3xl text-black mb-2">Envie uma Mensagem</h2>
                 <p className="text-gray-500 mb-8">Preencha o formulário abaixo e entraremos em contato em breve.</p>
                 
-                <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
+                <form className="space-y-6" onSubmit={handleSendMessage}>
                   <div className="grid md:grid-cols-2 gap-6">
                     <div className="space-y-2">
                       <Label htmlFor="name">Nome Completo</Label>
-                      <Input id="name" placeholder="Seu nome" className="bg-white border-gray-200 focus:border-[#FFD700]" />
+                      <Input 
+                        id="name" 
+                        placeholder="Seu nome" 
+                        className="bg-white border-gray-200 focus:border-[#FFD700]" 
+                        value={formData.name}
+                        onChange={handleInputChange}
+                        required
+                      />
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="phone">Telefone</Label>
-                      <Input id="phone" placeholder="+244 9XX XXX XXX" className="bg-white border-gray-200 focus:border-[#FFD700]" />
+                      <Input 
+                        id="phone" 
+                        placeholder="+244 9XX XXX XXX" 
+                        className="bg-white border-gray-200 focus:border-[#FFD700]" 
+                        value={formData.phone}
+                        onChange={handleInputChange}
+                        required
+                      />
                     </div>
                   </div>
                   
                   <div className="space-y-2">
                     <Label htmlFor="email">Email</Label>
-                    <Input id="email" type="email" placeholder="seu@email.com" className="bg-white border-gray-200 focus:border-[#FFD700]" />
+                    <Input 
+                      id="email" 
+                      type="email" 
+                      placeholder="seu@email.com" 
+                      className="bg-white border-gray-200 focus:border-[#FFD700]" 
+                      value={formData.email}
+                      onChange={handleInputChange}
+                      required
+                    />
                   </div>
 
                   <div className="space-y-2">
                     <Label htmlFor="subject">Assunto</Label>
-                    <Input id="subject" placeholder="Interesse em imóvel, Parceria, etc." className="bg-white border-gray-200 focus:border-[#FFD700]" />
+                    <Input 
+                      id="subject" 
+                      placeholder="Interesse em imóvel, Parceria, etc." 
+                      className="bg-white border-gray-200 focus:border-[#FFD700]" 
+                      value={formData.subject}
+                      onChange={handleInputChange}
+                      required
+                    />
                   </div>
 
                   <div className="space-y-2">
@@ -139,12 +196,15 @@ export default function Contact() {
                       id="message" 
                       placeholder="Como podemos ajudar?" 
                       className="min-h-[150px] bg-white border-gray-200 focus:border-[#FFD700] resize-none" 
+                      value={formData.message}
+                      onChange={handleInputChange}
+                      required
                     />
                   </div>
 
                   <Button type="submit" className="w-full bg-black hover:bg-black/90 text-white font-medium py-6">
                     <Send className="mr-2 h-4 w-4" />
-                    Enviar Mensagem
+                    Enviar Mensagem via WhatsApp
                   </Button>
                 </form>
               </div>
