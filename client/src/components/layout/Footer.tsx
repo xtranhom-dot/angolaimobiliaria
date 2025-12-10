@@ -15,10 +15,9 @@ export function Footer() {
             <span className="font-serif text-2xl md:text-3xl font-bold">Redes Sociais</span>
           </div>
           <div className="flex items-center gap-4">
-            <a href="#" className="bg-[#1877F2] text-white p-3 rounded-full hover:scale-110 transition-transform"><Facebook className="w-5 h-5" /></a>
-            <a href="#" className="bg-[#E4405F] text-white p-3 rounded-full hover:scale-110 transition-transform"><Instagram className="w-5 h-5" /></a>
-            <a href="#" className="bg-[#0A66C2] text-white p-3 rounded-full hover:scale-110 transition-transform"><Linkedin className="w-5 h-5" /></a>
-            <a href="#" className="bg-[#FF0000] text-white p-3 rounded-full hover:scale-110 transition-transform"><Youtube className="w-5 h-5" /></a>
+            <a href="https://www.facebook.com/angolaimobiliaria1" target="_blank" rel="noopener noreferrer" className="bg-[#1877F2] text-white p-3 rounded-full hover:scale-110 transition-transform"><Facebook className="w-5 h-5" /></a>
+            <a href="https://www.instagram.com/angola.imobiliario?igsh=ODl0NWd5OW15ZHRi" target="_blank" rel="noopener noreferrer" className="bg-[#E4405F] text-white p-3 rounded-full hover:scale-110 transition-transform"><Instagram className="w-5 h-5" /></a>
+            <a href="https://youtube.com/@angolaimobiliario?si=6QnshaAZZRlMGz7G" target="_blank" rel="noopener noreferrer" className="bg-[#FF0000] text-white p-3 rounded-full hover:scale-110 transition-transform"><Youtube className="w-5 h-5" /></a>
           </div>
         </div>
       </div>
@@ -89,10 +88,9 @@ export function Footer() {
             <div className="space-y-2">
               <h4 className="font-sans text-xs font-bold uppercase tracking-widest text-white/60">Redes Sociais:</h4>
               <div className="flex gap-4">
-                 <a href="#" className="hover:text-[#FFD700]"><Facebook className="w-4 h-4" /></a>
-                 <a href="#" className="hover:text-[#FFD700]"><Instagram className="w-4 h-4" /></a>
-                 <a href="#" className="hover:text-[#FFD700]"><Linkedin className="w-4 h-4" /></a>
-                 <a href="#" className="hover:text-[#FFD700]"><Youtube className="w-4 h-4" /></a>
+                 <a href="https://www.facebook.com/angolaimobiliaria1" target="_blank" rel="noopener noreferrer" className="hover:text-[#FFD700]"><Facebook className="w-4 h-4" /></a>
+                 <a href="https://www.instagram.com/angola.imobiliario?igsh=ODl0NWd5OW15ZHRi" target="_blank" rel="noopener noreferrer" className="hover:text-[#FFD700]"><Instagram className="w-4 h-4" /></a>
+                 <a href="https://youtube.com/@angolaimobiliario?si=6QnshaAZZRlMGz7G" target="_blank" rel="noopener noreferrer" className="hover:text-[#FFD700]"><Youtube className="w-4 h-4" /></a>
               </div>
             </div>
           </div>

@@ -68,10 +68,9 @@ export function Header() {
           </div>
           
           <div className="flex items-center gap-3">
-            <a href="#" className="hover:text-[#FFD700] transition-colors"><Facebook className="w-4 h-4" /></a>
-            <a href="#" className="hover:text-[#FFD700] transition-colors"><Instagram className="w-4 h-4" /></a>
-            <a href="#" className="hover:text-[#FFD700] transition-colors"><Linkedin className="w-4 h-4" /></a>
-            <a href="#" className="hover:text-[#FFD700] transition-colors"><Youtube className="w-4 h-4" /></a>
+            <a href="https://www.facebook.com/angolaimobiliaria1" target="_blank" rel="noopener noreferrer" className="hover:text-[#FFD700] transition-colors"><Facebook className="w-4 h-4" /></a>
+            <a href="https://www.instagram.com/angola.imobiliario?igsh=ODl0NWd5OW15ZHRi" target="_blank" rel="noopener noreferrer" className="hover:text-[#FFD700] transition-colors"><Instagram className="w-4 h-4" /></a>
+            <a href="https://youtube.com/@angolaimobiliario?si=6QnshaAZZRlMGz7G" target="_blank" rel="noopener noreferrer" className="hover:text-[#FFD700] transition-colors"><Youtube className="w-4 h-4" /></a>
           </div>
         </div>
 
