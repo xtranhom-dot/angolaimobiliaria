@@ -5,39 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Search, Mail, Phone, Calendar, Star, Trash2 } from "lucide-react";
 
 export default function AdminMessages() {
-  const messages = [
-    {
-      id: 1,
-      name: "João Manuel",
-      email: "joao.manuel@email.com",
-      phone: "+244 923 456 789",
-      date: "09 Dez 2024",
-      subject: "Interesse no Apartamento T3 Miramar",
-      message: "Olá, gostaria de saber mais informações sobre o imóvel no Talatona. É possível agendar uma visita para este fim de semana?",
-      read: false,
-    },
-    {
-      id: 2,
-      name: "Maria Silva",
-      email: "maria.silva@email.com",
-      phone: "+244 934 567 890",
-      date: "08 Dez 2024",
-      subject: "Dúvida sobre financiamento",
-      message: "Boa tarde, vocês trabalham com financiamento bancário? Se sim, quais bancos são parceiros?",
-      read: true,
-    },
-    {
-      id: 3,
-      name: "António Costa",
-      email: "antonio.costa@email.com",
-      phone: "+244 912 345 678",
-      date: "07 Dez 2024",
-      subject: "Venda de Imóvel",
-      message: "Tenho um imóvel no Kilamba e gostaria de colocar à venda com a vossa imobiliária. Como procedo?",
-      read: true,
-    },
-  ];
-
+  const messages: any[] = []; // Mock data removed
+  
   return (
     <AdminLayout>
       <div className="space-y-8">
