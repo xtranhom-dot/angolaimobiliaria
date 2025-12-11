@@ -8,6 +8,7 @@ import Contact from "@/pages/contact";
 import PropertyDetails from "@/pages/property-details";
 import NotFound from "@/pages/not-found";
 import PrivacyPolicy from "@/pages/privacy-policy";
+import PropertiesPage from "@/pages/properties";
 
 // Admin Pages
 import AdminDashboard from "@/pages/admin/dashboard";
@@ -23,6 +24,7 @@ function Router() {
     <Switch>
       <Route path="/" component={Home} />
       <Route path="/contact" component={Contact} />
+      <Route path="/properties" component={PropertiesPage} />
       <Route path="/property/:id" component={PropertyDetails} />
       <Route path="/privacy-policy" component={PrivacyPolicy} />
       
