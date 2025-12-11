@@ -94,9 +94,11 @@ export default function AdminProperties() {
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
                         <DropdownMenuLabel>Ações</DropdownMenuLabel>
-                        <DropdownMenuItem>
-                          <Pencil className="mr-2 h-4 w-4" /> Editar
-                        </DropdownMenuItem>
+                        <Link href={`/admin/properties/${i}/edit`}>
+                          <DropdownMenuItem className="cursor-pointer">
+                            <Pencil className="mr-2 h-4 w-4" /> Editar
+                          </DropdownMenuItem>
+                        </Link>
                         <DropdownMenuSeparator />
                         <DropdownMenuItem className="text-red-600">
                           <Trash2 className="mr-2 h-4 w-4" /> Excluir

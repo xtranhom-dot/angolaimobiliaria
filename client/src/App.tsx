@@ -34,6 +34,7 @@ function Router() {
       <Route path="/admin/dashboard" component={AdminDashboard} />
       <Route path="/admin/properties" component={AdminProperties} />
       <Route path="/admin/properties/new" component={AdminPropertyForm} />
+      <Route path="/admin/properties/:id/edit" component={AdminPropertyForm} />
       <Route path="/admin/locations" component={AdminLocations} />
       <Route path="/admin/messages" component={AdminMessages} />
       <Route path="/admin/settings" component={AdminSettings} />

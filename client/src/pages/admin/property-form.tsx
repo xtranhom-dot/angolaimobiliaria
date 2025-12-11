@@ -5,9 +5,12 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { ArrowLeft, Upload, Image as ImageIcon, Trash2 } from "lucide-react";
-import { Link } from "wouter";
+import { Link, useRoute } from "wouter";
 
 export default function AdminPropertyForm() {
+  const [match, params] = useRoute("/admin/properties/:id/edit");
+  const isEditing = match;
+
   return (
     <AdminLayout>
       <div className="max-w-4xl mx-auto space-y-8 pb-12">
@@ -18,8 +21,8 @@ export default function AdminPropertyForm() {
             </Button>
           </Link>
           <div>
-            <h2 className="text-3xl font-bold tracking-tight text-gray-900">Novo Imóvel</h2>
-            <p className="text-gray-500">Preencha as informações para cadastrar um novo imóvel.</p>
+            <h2 className="text-3xl font-bold tracking-tight text-gray-900">{isEditing ? "Editar Imóvel" : "Novo Imóvel"}</h2>
+            <p className="text-gray-500">{isEditing ? "Atualize as informações do imóvel." : "Preencha as informações para cadastrar um novo imóvel."}</p>
           </div>
         </div>
 
