@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { PropertyCard, PropertyProps } from "@/components/ui/property-card";
@@ -8,29 +9,26 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Slider } from "@/components/ui/slider";
 import { Search, MapPin, Home, Filter } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle } from "@/components/ui/sheet";
-
-// Mock Data (Expanded)
-const PROPERTIES: PropertyProps[] = [];
-
-/*
-const PROPERTIES_MOCK: PropertyProps[] = [
-  {
-    id: "1",
-    image: "/attached_assets/generated_images/modern_house_with_pool_exterior.png",
-    location: "Luanda, Talatona",
-    title: "Casa clássica com piscina localizada no Condomínio Belas",
-    area: 320.63,
-    bedrooms: 3,
-    bathrooms: 3,
-    price: 850000000,
-    status: "Venda"
-  },
-  // ... other items ...
-];
-*/
+import type { Property } from "@shared/schema";
 
 export default function PropertiesPage() {
   const [priceRange, setPriceRange] = useState([0, 2000000000]);
+  
+  const { data: properties = [], isLoading } = useQuery<Property[]>({
+    queryKey: ["/api/properties"],
+  });
+
+  const formattedProperties: PropertyProps[] = properties.map((p) => ({
+    id: p.id,
+    image: p.coverImage || p.images?.[0] || "/attached_assets/generated_images/modern_house_with_pool_exterior.png",
+    location: `${p.municipality}, ${p.province}`,
+    title: p.title,
+    area: Number(p.area),
+    bedrooms: p.bedrooms || 0,
+    bathrooms: p.bathrooms || 0,
+    price: Number(p.price),
+    status: p.purpose
+  }));
   
   return (
     <div className="min-h-screen flex flex-col font-sans bg-gray-50">
@@ -82,7 +80,13 @@ export default function PropertiesPage() {
         {/* Properties Grid */}
         <div className="flex-1">
           <div className="flex justify-between items-center mb-6">
-            <p className="text-gray-500 text-sm">Mostrando <span className="font-bold text-black">{PROPERTIES.length}</span> imóveis</p>
+            <p className="text-gray-500 text-sm">
+              {isLoading ? (
+                "Carregando..."
+              ) : (
+                <>Mostrando <span className="font-bold text-black">{formattedProperties.length}</span> imóveis</>
+              )}
+            </p>
             <Select defaultValue="newest">
               <SelectTrigger className="w-[180px]">
                 <SelectValue placeholder="Ordenar por" />
@@ -95,19 +99,31 @@ export default function PropertiesPage() {
             </Select>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {PROPERTIES.map((prop) => (
-              <PropertyCard key={prop.id} property={prop} />
-            ))}
-          </div>
+          {isLoading ? (
+            <div className="text-center py-12">
+              <p className="text-gray-500">Carregando imóveis...</p>
+            </div>
+          ) : formattedProperties.length === 0 ? (
+            <div className="text-center py-12 bg-white rounded-lg border">
+              <p className="text-gray-500">Nenhum imóvel encontrado.</p>
+            </div>
+          ) : (
+            <>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {formattedProperties.map((prop) => (
+                  <PropertyCard key={prop.id} property={prop} />
+                ))}
+              </div>
 
-          <div className="mt-12 flex justify-center gap-2">
-            <Button variant="outline" className="w-10 h-10 p-0 font-bold border-black bg-black text-[#FFD700]">1</Button>
-            <Button variant="outline" className="w-10 h-10 p-0 font-bold hover:bg-gray-100">2</Button>
-            <Button variant="outline" className="w-10 h-10 p-0 font-bold hover:bg-gray-100">3</Button>
-            <span className="flex items-end px-2">...</span>
-            <Button variant="outline" className="w-10 h-10 p-0 font-bold hover:bg-gray-100">8</Button>
-          </div>
+              <div className="mt-12 flex justify-center gap-2">
+                <Button variant="outline" className="w-10 h-10 p-0 font-bold border-black bg-black text-[#FFD700]">1</Button>
+                <Button variant="outline" className="w-10 h-10 p-0 font-bold hover:bg-gray-100">2</Button>
+                <Button variant="outline" className="w-10 h-10 p-0 font-bold hover:bg-gray-100">3</Button>
+                <span className="flex items-end px-2">...</span>
+                <Button variant="outline" className="w-10 h-10 p-0 font-bold hover:bg-gray-100">8</Button>
+              </div>
+            </>
+          )}
         </div>
       </main>
 

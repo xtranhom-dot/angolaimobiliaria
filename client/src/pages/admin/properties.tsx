@@ -1,3 +1,4 @@
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { AdminLayout } from "@/components/layout/AdminLayout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -19,8 +20,25 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import type { Property } from "@shared/schema";
 
 export default function AdminProperties() {
+  const queryClient = useQueryClient();
+
+  const { data: properties = [], isLoading } = useQuery<Property[]>({
+    queryKey: ["/api/properties"],
+  });
+
+  const deleteMutation = useMutation({
+    mutationFn: async (id: string) => {
+      const res = await fetch(`/api/properties/${id}`, { method: "DELETE" });
+      if (!res.ok) throw new Error("Failed to delete property");
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/properties"] });
+    },
+  });
+
   return (
     <AdminLayout>
       <div className="space-y-6">
@@ -61,13 +79,81 @@ export default function AdminProperties() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {/* Mock data removed for API integration */}
-              {/* {[1, 2, 3, 4, 5].map((i) => ( ... ))} */}
-              <TableRow>
-                <TableCell colSpan={6} className="text-center py-8 text-gray-500">
-                  Nenhum imóvel encontrado. Conectando ao banco de dados...
-                </TableCell>
-              </TableRow>
+              {isLoading ? (
+                <TableRow>
+                  <TableCell colSpan={6} className="text-center py-8 text-gray-500">
+                    Carregando imóveis...
+                  </TableCell>
+                </TableRow>
+              ) : properties.length === 0 ? (
+                <TableRow>
+                  <TableCell colSpan={6} className="text-center py-8 text-gray-500">
+                    Nenhum imóvel cadastrado. Clique em "Novo Imóvel" para começar.
+                  </TableCell>
+                </TableRow>
+              ) : (
+                properties.map((property) => (
+                  <TableRow key={property.id}>
+                    <TableCell>
+                      <div className="flex items-center gap-3">
+                        <div className="w-12 h-12 rounded-md bg-gray-100 overflow-hidden">
+                          <img 
+                            src={property.coverImage || property.images?.[0] || "/attached_assets/generated_images/modern_house_with_pool_exterior.png"}
+                            className="w-full h-full object-cover"
+                            alt={property.title}
+                          />
+                        </div>
+                        <div>
+                          <p className="font-medium text-gray-900">{property.title}</p>
+                          <p className="text-xs text-gray-500">{property.municipality}, {property.province}</p>
+                        </div>
+                      </div>
+                    </TableCell>
+                    <TableCell>
+                      <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                        property.status === 'available' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'
+                      }`}>
+                        {property.status === 'available' ? 'Disponível' : 'Indisponível'}
+                      </span>
+                    </TableCell>
+                    <TableCell className="font-medium">
+                      {new Intl.NumberFormat('pt-AO', { style: 'currency', currency: 'AOA' }).format(Number(property.price))}
+                    </TableCell>
+                    <TableCell>{property.purpose}</TableCell>
+                    <TableCell className="text-gray-500 text-sm">
+                      {property.createdAt ? new Date(property.createdAt).toLocaleDateString('pt-AO') : '-'}
+                    </TableCell>
+                    <TableCell className="text-right">
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <Button variant="ghost" className="h-8 w-8 p-0">
+                            <MoreHorizontal className="h-4 w-4" />
+                          </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end">
+                          <DropdownMenuLabel>Ações</DropdownMenuLabel>
+                          <Link href={`/admin/properties/${property.id}/edit`}>
+                            <DropdownMenuItem className="cursor-pointer">
+                              <Pencil className="mr-2 h-4 w-4" /> Editar
+                            </DropdownMenuItem>
+                          </Link>
+                          <DropdownMenuSeparator />
+                          <DropdownMenuItem 
+                            className="text-red-600 cursor-pointer"
+                            onClick={() => {
+                              if (confirm("Tem certeza que deseja excluir este imóvel?")) {
+                                deleteMutation.mutate(property.id);
+                              }
+                            }}
+                          >
+                            <Trash2 className="mr-2 h-4 w-4" /> Excluir
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    </TableCell>
+                  </TableRow>
+                ))
+              )}
             </TableBody>
           </Table>
         </div>

@@ -1,27 +1,66 @@
 import { useState } from "react";
+import { useMutation } from "@tanstack/react-query";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 import { Phone, Mail, MapPin, Send, Home, Key, HelpCircle } from "lucide-react";
 import contactHero from "@assets/generated_images/luxury_real_estate_office_reception.png";
 import { cn } from "@/lib/utils";
+import { useToast } from "@/hooks/use-toast";
+import type { InsertMessage } from "@shared/schema";
 
 export default function Contact() {
+  const { toast } = useToast();
   const [formData, setFormData] = useState({
     name: "",
+    email: "",
     phone: "",
-    subject: ""
+    subject: "",
+    message: ""
   });
 
   const subjects = [
-    { id: "aluguel", label: "Aluguel", icon: Key },
-    { id: "venda", label: "Venda", icon: Home },
-    { id: "outro", label: "Outro", icon: HelpCircle },
+    { id: "Interesse em Aluguel", label: "Aluguel", icon: Key },
+    { id: "Interesse em Venda", label: "Venda", icon: Home },
+    { id: "Outro Assunto", label: "Outro", icon: HelpCircle },
   ];
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const createMessageMutation = useMutation({
+    mutationFn: async (data: InsertMessage) => {
+      const res = await fetch("/api/messages", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+      if (!res.ok) throw new Error("Failed to send message");
+      return res.json();
+    },
+    onSuccess: () => {
+      toast({
+        title: "Mensagem enviada!",
+        description: "Recebemos sua mensagem e entraremos em contato em breve.",
+      });
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        subject: "",
+        message: ""
+      });
+    },
+    onError: () => {
+      toast({
+        title: "Erro",
+        description: "Falha ao enviar mensagem. Tente novamente.",
+        variant: "destructive",
+      });
+    },
+  });
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { id, value } = e.target;
     setFormData(prev => ({
       ...prev,
@@ -38,19 +77,37 @@ export default function Contact() {
 
   const handleSendMessage = (e: React.FormEvent) => {
     e.preventDefault();
-    const { name, phone, subject } = formData;
+    const { name, email, phone, subject, message } = formData;
     
     if (!subject) {
-      alert("Por favor, selecione um assunto.");
+      toast({
+        title: "Atenção",
+        description: "Por favor, selecione um assunto.",
+        variant: "destructive",
+      });
       return;
     }
 
-    const subjectLabel = subjects.find(s => s.id === subject)?.label || subject;
+    if (!email) {
+      toast({
+        title: "Atenção",
+        description: "Por favor, preencha seu email.",
+        variant: "destructive",
+      });
+      return;
+    }
 
-    // Format message for WhatsApp
-    const text = `*Nova Mensagem do Site*%0A%0A*Nome:* ${name}%0A*Telefone:* ${phone}%0A*Assunto:* ${subjectLabel}`;
-    
-    // Open WhatsApp
+    // Save to database
+    createMessageMutation.mutate({
+      name,
+      email,
+      phone: phone || undefined,
+      subject,
+      message: message || `${subject} - Mensagem enviada via formulário de contato.`,
+    });
+
+    // Also send via WhatsApp
+    const text = `*Nova Mensagem do Site*%0A%0A*Nome:* ${name}%0A*Email:* ${email}%0A*Telefone:* ${phone}%0A*Assunto:* ${subject}%0A*Mensagem:* ${message}`;
     window.open(`https://wa.me/244953430432?text=${text}`, '_blank');
   };
 
@@ -157,10 +214,10 @@ export default function Contact() {
                 <h2 className="font-serif text-3xl text-black mb-2">Envie uma Mensagem</h2>
                 <p className="text-gray-500 mb-8">Preencha o formulário abaixo e entraremos em contato em breve.</p>
                 
-                <form className="space-y-8" onSubmit={handleSendMessage}>
-                  <div className="space-y-6">
+                <form className="space-y-6" onSubmit={handleSendMessage}>
+                  <div className="space-y-4">
                     <div className="space-y-2">
-                      <Label htmlFor="name">Nome Completo</Label>
+                      <Label htmlFor="name">Nome Completo *</Label>
                       <Input 
                         id="name" 
                         placeholder="Seu nome" 
@@ -170,6 +227,20 @@ export default function Contact() {
                         required
                       />
                     </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="email">Email *</Label>
+                      <Input 
+                        id="email" 
+                        type="email"
+                        placeholder="seu@email.com" 
+                        className="bg-white border-gray-200 focus:border-[#FFD700] h-12" 
+                        value={formData.email}
+                        onChange={handleInputChange}
+                        required
+                      />
+                    </div>
+
                     <div className="space-y-2">
                       <Label htmlFor="phone">Telefone</Label>
                       <Input 
@@ -178,13 +249,12 @@ export default function Contact() {
                         className="bg-white border-gray-200 focus:border-[#FFD700] h-12" 
                         value={formData.phone}
                         onChange={handleInputChange}
-                        required
                       />
                     </div>
                   </div>
                   
                   <div className="space-y-3">
-                    <Label>Assunto</Label>
+                    <Label>Assunto *</Label>
                     <div className="grid grid-cols-3 gap-4">
                       {subjects.map((subject) => (
                         <div 
@@ -207,9 +277,24 @@ export default function Contact() {
                     </div>
                   </div>
 
-                  <Button type="submit" className="w-full bg-black hover:bg-black/90 text-white font-medium py-6 text-lg rounded-xl shadow-lg shadow-black/10">
+                  <div className="space-y-2">
+                    <Label htmlFor="message">Mensagem</Label>
+                    <Textarea 
+                      id="message" 
+                      placeholder="Conte-nos o que você procura..." 
+                      className="bg-white border-gray-200 focus:border-[#FFD700] min-h-[120px]" 
+                      value={formData.message}
+                      onChange={handleInputChange}
+                    />
+                  </div>
+
+                  <Button 
+                    type="submit" 
+                    className="w-full bg-black hover:bg-black/90 text-white font-medium py-6 text-lg rounded-xl shadow-lg shadow-black/10"
+                    disabled={createMessageMutation.isPending}
+                  >
                     <Send className="mr-2 h-5 w-5" />
-                    Enviar via WhatsApp
+                    {createMessageMutation.isPending ? "Enviando..." : "Enviar Mensagem"}
                   </Button>
                 </form>
               </div>

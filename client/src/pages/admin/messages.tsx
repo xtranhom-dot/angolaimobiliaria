@@ -1,12 +1,38 @@
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { AdminLayout } from "@/components/layout/AdminLayout";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Search, Mail, Phone, Calendar, Star, Trash2 } from "lucide-react";
+import { Search, Mail, Phone, Calendar, Trash2 } from "lucide-react";
+import type { Message } from "@shared/schema";
 
 export default function AdminMessages() {
-  const messages: any[] = []; // Mock data removed
-  
+  const queryClient = useQueryClient();
+
+  const { data: messages = [], isLoading } = useQuery<Message[]>({
+    queryKey: ["/api/messages"],
+  });
+
+  const deleteMutation = useMutation({
+    mutationFn: async (id: string) => {
+      const res = await fetch(`/api/messages/${id}`, { method: "DELETE" });
+      if (!res.ok) throw new Error("Failed to delete message");
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/messages"] });
+    },
+  });
+
+  const markAsReadMutation = useMutation({
+    mutationFn: async (id: string) => {
+      const res = await fetch(`/api/messages/${id}/read`, { method: "PATCH" });
+      if (!res.ok) throw new Error("Failed to mark message as read");
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/messages"] });
+    },
+  });
+
   return (
     <AdminLayout>
       <div className="space-y-8">
@@ -25,61 +51,87 @@ export default function AdminMessages() {
           />
         </div>
 
-        <div className="space-y-4">
-          {messages.map((message) => (
-            <Card key={message.id} className={`transition-all duration-200 hover:shadow-md ${!message.read ? 'border-l-4 border-l-[#FFD700]' : ''}`}>
-              <CardContent className="p-6">
-                <div className="flex flex-col md:flex-row gap-6">
-                  <div className="flex-1 space-y-4">
-                    <div className="flex items-start justify-between">
-                      <div className="space-y-1">
-                        <div className="flex items-center gap-2">
-                          <h3 className="font-semibold text-lg text-gray-900">{message.name}</h3>
-                          {!message.read && (
-                            <span className="bg-[#FFD700]/10 text-[#FFD700] text-xs font-bold px-2 py-0.5 rounded-full">
-                              Novo
-                            </span>
-                          )}
+        {isLoading ? (
+          <div className="text-center py-12">
+            <p className="text-gray-500">Carregando mensagens...</p>
+          </div>
+        ) : messages.length === 0 ? (
+          <div className="text-center py-12 bg-white rounded-lg border">
+            <p className="text-gray-500">Nenhuma mensagem recebida ainda.</p>
+          </div>
+        ) : (
+          <div className="space-y-4">
+            {messages.map((message) => (
+              <Card key={message.id} className={`transition-all duration-200 hover:shadow-md ${!message.read ? 'border-l-4 border-l-[#FFD700]' : ''}`}>
+                <CardContent className="p-6">
+                  <div className="flex flex-col md:flex-row gap-6">
+                    <div className="flex-1 space-y-4">
+                      <div className="flex items-start justify-between">
+                        <div className="space-y-1">
+                          <div className="flex items-center gap-2">
+                            <h3 className="font-semibold text-lg text-gray-900">{message.name}</h3>
+                            {!message.read && (
+                              <span className="bg-[#FFD700]/10 text-[#FFD700] text-xs font-bold px-2 py-0.5 rounded-full">
+                                Novo
+                              </span>
+                            )}
+                          </div>
+                          <p className="text-sm font-medium text-gray-500">{message.subject}</p>
                         </div>
-                        <p className="text-sm font-medium text-gray-500">{message.subject}</p>
+                        <div className="flex items-center text-sm text-gray-400 gap-1">
+                          <Calendar className="h-4 w-4" />
+                          <span>{message.createdAt ? new Date(message.createdAt).toLocaleDateString('pt-AO') : '-'}</span>
+                        </div>
                       </div>
-                      <div className="flex items-center text-sm text-gray-400 gap-1">
-                        <Calendar className="h-4 w-4" />
-                        <span>{message.date}</span>
+
+                      <p className="text-gray-600 leading-relaxed">
+                        {message.message}
+                      </p>
+
+                      <div className="flex items-center gap-4 text-sm text-gray-500 pt-2">
+                        <div className="flex items-center gap-2 bg-gray-50 px-3 py-1.5 rounded-full">
+                          <Mail className="h-4 w-4" />
+                          {message.email}
+                        </div>
+                        {message.phone && (
+                          <div className="flex items-center gap-2 bg-gray-50 px-3 py-1.5 rounded-full">
+                            <Phone className="h-4 w-4" />
+                            {message.phone}
+                          </div>
+                        )}
                       </div>
                     </div>
 
-                    <p className="text-gray-600 leading-relaxed">
-                      {message.message}
-                    </p>
-
-                    <div className="flex items-center gap-4 text-sm text-gray-500 pt-2">
-                      <div className="flex items-center gap-2 bg-gray-50 px-3 py-1.5 rounded-full">
-                        <Mail className="h-4 w-4" />
-                        {message.email}
-                      </div>
-                      <div className="flex items-center gap-2 bg-gray-50 px-3 py-1.5 rounded-full">
-                        <Phone className="h-4 w-4" />
-                        {message.phone}
-                      </div>
+                    <div className="flex md:flex-col gap-2 justify-end md:justify-start border-t md:border-t-0 md:border-l border-gray-100 pt-4 md:pt-0 md:pl-6 min-w-[120px]">
+                      {!message.read && (
+                        <Button 
+                          variant="outline" 
+                          className="w-full justify-start gap-2 hover:bg-[#FFD700] hover:text-black hover:border-[#FFD700]"
+                          onClick={() => markAsReadMutation.mutate(message.id)}
+                        >
+                          <Mail className="h-4 w-4" />
+                          Marcar Lida
+                        </Button>
+                      )}
+                      <Button 
+                        variant="outline" 
+                        className="w-full justify-start gap-2 hover:bg-red-50 hover:text-red-600 hover:border-red-200"
+                        onClick={() => {
+                          if (confirm("Tem certeza que deseja apagar esta mensagem?")) {
+                            deleteMutation.mutate(message.id);
+                          }
+                        }}
+                      >
+                        <Trash2 className="h-4 w-4" />
+                        Apagar
+                      </Button>
                     </div>
                   </div>
-
-                  <div className="flex md:flex-col gap-2 justify-end md:justify-start border-t md:border-t-0 md:border-l border-gray-100 pt-4 md:pt-0 md:pl-6 min-w-[120px]">
-                    <Button variant="outline" className="w-full justify-start gap-2 hover:bg-[#FFD700] hover:text-black hover:border-[#FFD700]">
-                      <Mail className="h-4 w-4" />
-                      Responder
-                    </Button>
-                    <Button variant="outline" className="w-full justify-start gap-2 hover:bg-red-50 hover:text-red-600 hover:border-red-200">
-                      <Trash2 className="h-4 w-4" />
-                      Apagar
-                    </Button>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        )}
       </div>
     </AdminLayout>
   );
