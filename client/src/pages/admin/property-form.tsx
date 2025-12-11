@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { ArrowLeft, Upload, Trash2 } from "lucide-react";
+import { ArrowLeft, Upload, Trash2, ImagePlus, X, Loader2 } from "lucide-react";
 import { Link, useRoute, useLocation } from "wouter";
 import { insertPropertySchema, type InsertProperty } from "@shared/schema";
 import { useToast } from "@/hooks/use-toast";
@@ -20,6 +20,10 @@ export default function AdminPropertyForm() {
   const [match, params] = useRoute("/admin/properties/:id/edit");
   const isEditing = match;
   const propertyId = params?.id;
+  
+  const [uploadedImages, setUploadedImages] = useState<string[]>([]);
+  const [isUploading, setIsUploading] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const { data: existingProperty, isLoading: isLoadingProperty } = useQuery({
     queryKey: ["/api/properties", propertyId],
@@ -52,8 +56,72 @@ export default function AdminPropertyForm() {
       Object.keys(existingProperty).forEach((key) => {
         setValue(key as keyof InsertProperty, existingProperty[key]);
       });
+      if (existingProperty.images && existingProperty.images.length > 0) {
+        setUploadedImages(existingProperty.images);
+      }
     }
   }, [existingProperty, setValue]);
+
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files || files.length === 0) return;
+
+    setIsUploading(true);
+    const formData = new FormData();
+    Array.from(files).forEach((file) => {
+      formData.append("images", file);
+    });
+
+    try {
+      const res = await fetch("/api/upload", {
+        method: "POST",
+        body: formData,
+      });
+      if (!res.ok) throw new Error("Upload failed");
+      const data = await res.json();
+      const newImages = [...uploadedImages, ...data.urls];
+      setUploadedImages(newImages);
+      setValue("images", newImages);
+      toast({
+        title: "Sucesso!",
+        description: `${data.urls.length} imagem(ns) enviada(s) com sucesso.`,
+      });
+    } catch (error) {
+      toast({
+        title: "Erro",
+        description: "Falha ao enviar imagem(ns). Tente novamente.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsUploading(false);
+      if (fileInputRef.current) {
+        fileInputRef.current.value = "";
+      }
+    }
+  };
+
+  const handleRemoveImage = async (imageUrl: string) => {
+    try {
+      await fetch("/api/upload", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ url: imageUrl }),
+      });
+      const newImages = uploadedImages.filter((img) => img !== imageUrl);
+      setUploadedImages(newImages);
+      setValue("images", newImages);
+    } catch (error) {
+      console.error("Failed to delete image:", error);
+    }
+  };
+
+  const setAsCover = (imageUrl: string) => {
+    setValue("coverImage", imageUrl);
+    toast({
+      title: "Imagem de capa definida",
+      description: "Esta imagem será usada como capa do imóvel.",
+    });
+  };
 
   const createMutation = useMutation({
     mutationFn: async (data: InsertProperty) => {
@@ -110,10 +178,17 @@ export default function AdminPropertyForm() {
   });
 
   const onSubmit = (data: InsertProperty) => {
+    const currentValues = watch();
+    const submissionData = {
+      ...currentValues,
+      ...data,
+      images: uploadedImages,
+      coverImage: data.coverImage || currentValues.coverImage || (uploadedImages.length > 0 ? uploadedImages[0] : null),
+    };
     if (isEditing) {
-      updateMutation.mutate(data);
+      updateMutation.mutate(submissionData);
     } else {
-      createMutation.mutate(data);
+      createMutation.mutate(submissionData);
     }
   };
 
@@ -325,17 +400,87 @@ export default function AdminPropertyForm() {
             </div>
           </div>
 
-          {/* Imagem de Capa */}
+          {/* Upload de Imagens */}
           <div className="bg-white p-6 rounded-lg border shadow-sm space-y-6">
-            <h3 className="text-lg font-bold border-b pb-4">Imagem de Capa (URL)</h3>
-            <div className="space-y-2">
-              <Label htmlFor="coverImage">URL da Imagem de Capa</Label>
-              <Input
-                id="coverImage"
-                {...register("coverImage")}
-                placeholder="https://exemplo.com/imagem.jpg"
+            <h3 className="text-lg font-bold border-b pb-4">Fotos do Imóvel</h3>
+            
+            <div className="space-y-4">
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/jpeg,image/jpg,image/png,image/gif,image/webp"
+                multiple
+                onChange={handleImageUpload}
+                className="hidden"
+                id="image-upload"
+                data-testid="input-image-upload"
               />
-              <p className="text-xs text-gray-500">Cole o link direto da imagem hospedada</p>
+              
+              <div 
+                onClick={() => fileInputRef.current?.click()}
+                className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center cursor-pointer hover:border-[#FFD700] hover:bg-yellow-50 transition-all"
+                data-testid="button-upload-area"
+              >
+                {isUploading ? (
+                  <div className="flex flex-col items-center gap-2">
+                    <Loader2 className="w-10 h-10 text-[#FFD700] animate-spin" />
+                    <p className="text-gray-500">Enviando imagens...</p>
+                  </div>
+                ) : (
+                  <div className="flex flex-col items-center gap-2">
+                    <ImagePlus className="w-10 h-10 text-gray-400" />
+                    <p className="text-gray-600 font-medium">Clique para adicionar fotos</p>
+                    <p className="text-sm text-gray-400">JPG, PNG, GIF ou WEBP (máx. 10MB cada)</p>
+                  </div>
+                )}
+              </div>
+
+              {uploadedImages.length > 0 && (
+                <div className="space-y-3">
+                  <Label>Imagens Adicionadas ({uploadedImages.length})</Label>
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    {uploadedImages.map((imageUrl, index) => (
+                      <div 
+                        key={index} 
+                        className={`relative group rounded-lg overflow-hidden border-2 ${watch("coverImage") === imageUrl ? "border-[#FFD700]" : "border-gray-200"}`}
+                        data-testid={`image-preview-${index}`}
+                      >
+                        <img 
+                          src={imageUrl} 
+                          alt={`Imagem ${index + 1}`} 
+                          className="w-full h-32 object-cover"
+                        />
+                        <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+                          <Button
+                            type="button"
+                            size="sm"
+                            variant="secondary"
+                            onClick={() => setAsCover(imageUrl)}
+                            className="text-xs"
+                            data-testid={`button-set-cover-${index}`}
+                          >
+                            {watch("coverImage") === imageUrl ? "Capa ✓" : "Definir Capa"}
+                          </Button>
+                          <Button
+                            type="button"
+                            size="sm"
+                            variant="destructive"
+                            onClick={() => handleRemoveImage(imageUrl)}
+                            data-testid={`button-remove-image-${index}`}
+                          >
+                            <X className="w-4 h-4" />
+                          </Button>
+                        </div>
+                        {watch("coverImage") === imageUrl && (
+                          <div className="absolute top-2 left-2 bg-[#FFD700] text-black text-xs font-bold px-2 py-1 rounded">
+                            CAPA
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
 

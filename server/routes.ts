@@ -4,6 +4,40 @@ import { storage } from "./storage";
 import { insertPropertySchema, insertMessageSchema } from "@shared/schema";
 import { z } from "zod";
 import { setupAuth, requireAuth } from "./auth";
+import multer from "multer";
+import path from "path";
+import fs from "fs";
+
+const uploadDir = path.join(process.cwd(), "uploads");
+if (!fs.existsSync(uploadDir)) {
+  fs.mkdirSync(uploadDir, { recursive: true });
+}
+
+const storage_multer = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, uploadDir);
+  },
+  filename: (req, file, cb) => {
+    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
+    const ext = path.extname(file.originalname);
+    cb(null, `property-${uniqueSuffix}${ext}`);
+  },
+});
+
+const upload = multer({
+  storage: storage_multer,
+  limits: { fileSize: 10 * 1024 * 1024 },
+  fileFilter: (req, file, cb) => {
+    const allowedTypes = /jpeg|jpg|png|gif|webp/;
+    const extname = allowedTypes.test(path.extname(file.originalname).toLowerCase());
+    const mimetype = allowedTypes.test(file.mimetype);
+    if (extname && mimetype) {
+      cb(null, true);
+    } else {
+      cb(new Error("Apenas imagens são permitidas (jpeg, jpg, png, gif, webp)"));
+    }
+  },
+});
 
 export async function registerRoutes(
   httpServer: Server,
@@ -63,7 +97,18 @@ export async function registerRoutes(
 
   app.patch("/api/properties/:id", requireAuth, async (req, res) => {
     try {
-      const property = await storage.updateProperty(req.params.id, req.body);
+      const existingProperty = await storage.getProperty(req.params.id);
+      if (!existingProperty) {
+        return res.status(404).json({ error: "Property not found" });
+      }
+      const updateData = { ...req.body };
+      if (updateData.images === undefined || updateData.images === null) {
+        updateData.images = existingProperty.images;
+      }
+      if (updateData.coverImage === undefined || updateData.coverImage === null) {
+        updateData.coverImage = existingProperty.coverImage;
+      }
+      const property = await storage.updateProperty(req.params.id, updateData);
       res.json(property);
     } catch (error) {
       console.error("Error updating property:", error);
@@ -159,6 +204,50 @@ export async function registerRoutes(
       res.status(500).json({ error: "Failed to fetch stats" });
     }
   });
+
+  // Image Upload Route
+  app.post("/api/upload", requireAuth, upload.array("images", 10), (req, res) => {
+    try {
+      const files = req.files as Express.Multer.File[];
+      if (!files || files.length === 0) {
+        return res.status(400).json({ error: "Nenhum arquivo enviado" });
+      }
+      const urls = files.map((file) => `/uploads/${file.filename}`);
+      res.json({ urls });
+    } catch (error) {
+      console.error("Error uploading images:", error);
+      res.status(500).json({ error: "Falha ao fazer upload das imagens" });
+    }
+  });
+
+  // Delete uploaded image
+  app.delete("/api/upload", requireAuth, async (req, res) => {
+    try {
+      const { url } = req.body;
+      if (!url) {
+        return res.status(400).json({ error: "URL da imagem não fornecida" });
+      }
+      const filename = path.basename(url);
+      if (!filename || filename.includes("..") || !filename.startsWith("property-")) {
+        return res.status(400).json({ error: "Nome de arquivo inválido" });
+      }
+      const filepath = path.join(uploadDir, filename);
+      const resolvedPath = path.resolve(filepath);
+      if (!resolvedPath.startsWith(path.resolve(uploadDir))) {
+        return res.status(400).json({ error: "Caminho inválido" });
+      }
+      if (fs.existsSync(resolvedPath)) {
+        fs.unlinkSync(resolvedPath);
+      }
+      res.status(204).send();
+    } catch (error) {
+      console.error("Error deleting image:", error);
+      res.status(500).json({ error: "Falha ao deletar imagem" });
+    }
+  });
+
+  // Serve uploaded files
+  app.use("/uploads", (await import("express")).default.static(uploadDir));
 
   return httpServer;
 }
