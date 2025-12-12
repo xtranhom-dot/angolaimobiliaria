@@ -31,7 +31,10 @@
   ],
   "functions": {
     "api/[...route].ts": {
-      "includeFiles": "server/**"
+      "includeFiles": [
+        "server/**",
+        "shared/**"
+      ]
     }
   }
 }

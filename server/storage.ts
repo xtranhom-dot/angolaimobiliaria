@@ -3,7 +3,7 @@ import {
   type User, type InsertUser,
   type Property, type InsertProperty,
   type Message, type InsertMessage
-} from "@shared/schema";
+} from "../shared/schema.js";
 import { db } from "./db.js";
 import { eq, desc } from "drizzle-orm";
 import { randomUUID } from "crypto";

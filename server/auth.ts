@@ -2,7 +2,7 @@ import { Express, Request, Response, NextFunction } from "express";
 import { scrypt, randomBytes, timingSafeEqual } from "crypto";
 import { promisify } from "util";
 import { storage } from "./storage.js";
-import { User as SelectUser } from "@shared/schema";
+import { User as SelectUser } from "../shared/schema.js";
 import jwt from "jsonwebtoken";
 
 declare global {
