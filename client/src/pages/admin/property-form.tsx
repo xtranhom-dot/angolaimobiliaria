@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { apiRequest } from "@/lib/queryClient";
 import { AdminLayout } from "@/components/layout/AdminLayout";
 import { Button } from "@/components/ui/button";
 import { getAuthToken } from "@/lib/queryClient";
@@ -135,12 +136,7 @@ export default function AdminPropertyForm() {
 
   const createMutation = useMutation({
     mutationFn: async (data: InsertProperty) => {
-      const res = await fetch("/api/properties", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
-      if (!res.ok) throw new Error("Failed to create property");
+      const res = await apiRequest("POST", "/api/properties", data);
       return res.json();
     },
     onSuccess: () => {
@@ -162,12 +158,7 @@ export default function AdminPropertyForm() {
 
   const updateMutation = useMutation({
     mutationFn: async (data: InsertProperty) => {
-      const res = await fetch(`/api/properties/${propertyId}`, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
-      if (!res.ok) throw new Error("Failed to update property");
+      const res = await apiRequest("PATCH", `/api/properties/${propertyId}`, data);
       return res.json();
     },
     onSuccess: () => {
