@@ -189,6 +189,7 @@ export async function registerRoutes(
 
   // Image Upload Route - Cloudinary
   app.post("/api/upload", requireAuth, upload.array("images", 10), async (req, res) => {
+    console.log("Upload request received. Files:", (req.files as any[])?.length);
     try {
       const files = req.files as Express.Multer.File[];
       if (!files || files.length === 0) {

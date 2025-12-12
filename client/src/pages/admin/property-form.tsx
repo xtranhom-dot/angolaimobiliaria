@@ -20,7 +20,7 @@ export default function AdminPropertyForm() {
   const [match, params] = useRoute("/admin/properties/:id/edit");
   const isEditing = match;
   const propertyId = params?.id;
-  
+
   const [uploadedImages, setUploadedImages] = useState<string[]>([]);
   const [isUploading, setIsUploading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -273,7 +273,7 @@ export default function AdminPropertyForm() {
                   id="price"
                   type="number"
                   step="0.01"
-                  {...register("price", { valueAsNumber: true })}
+                  {...register("price")}
                   placeholder="0,00"
                 />
                 {errors.price && <p className="text-red-500 text-sm">{errors.price.message}</p>}
@@ -285,7 +285,7 @@ export default function AdminPropertyForm() {
                   id="area"
                   type="number"
                   step="0.01"
-                  {...register("area", { valueAsNumber: true })}
+                  {...register("area")}
                   placeholder="0"
                 />
                 {errors.area && <p className="text-red-500 text-sm">{errors.area.message}</p>}
@@ -403,7 +403,7 @@ export default function AdminPropertyForm() {
           {/* Upload de Imagens */}
           <div className="bg-white p-6 rounded-lg border shadow-sm space-y-6">
             <h3 className="text-lg font-bold border-b pb-4">Fotos do Imóvel</h3>
-            
+
             <div className="space-y-4">
               <input
                 ref={fileInputRef}
@@ -415,8 +415,8 @@ export default function AdminPropertyForm() {
                 id="image-upload"
                 data-testid="input-image-upload"
               />
-              
-              <div 
+
+              <div
                 onClick={() => fileInputRef.current?.click()}
                 className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center cursor-pointer hover:border-[#FFD700] hover:bg-yellow-50 transition-all"
                 data-testid="button-upload-area"
@@ -440,14 +440,14 @@ export default function AdminPropertyForm() {
                   <Label>Imagens Adicionadas ({uploadedImages.length})</Label>
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                     {uploadedImages.map((imageUrl, index) => (
-                      <div 
-                        key={index} 
+                      <div
+                        key={index}
                         className={`relative group rounded-lg overflow-hidden border-2 ${watch("coverImage") === imageUrl ? "border-[#FFD700]" : "border-gray-200"}`}
                         data-testid={`image-preview-${index}`}
                       >
-                        <img 
-                          src={imageUrl} 
-                          alt={`Imagem ${index + 1}`} 
+                        <img
+                          src={imageUrl}
+                          alt={`Imagem ${index + 1}`}
                           className="w-full h-32 object-cover"
                         />
                         <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
