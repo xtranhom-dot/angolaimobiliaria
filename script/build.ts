@@ -62,22 +62,14 @@ async function buildAll() {
     external: externals,
     logLevel: "info",
   });
-
-  // Build API function for Vercel serverless
-  console.log("building api function for vercel...");
-  await esbuild({
-    entryPoints: ["api/index.ts"],
-    platform: "node",
-    bundle: true,
-    format: "esm",
-    outfile: "dist/api/index.js",
-    define: {
-      "process.env.NODE_ENV": '"production"',
-    },
-    minify: true,
-    external: ["@libsql/client"],
-    logLevel: "info",
-  });
+  // NOTE: Do not bundle the API function into `dist/api/index.js`.
+  // If a bundled file is placed under the published `dist/api` path,
+  // Vercel will serve it as a static file instead of executing it
+  // as a Serverless Function which causes POST requests to return 405.
+  // Leave the `api/` source files in the repository root so Vercel
+  // can build/execute them as functions. To locally bundle the API
+  // for testing, run a dedicated script or enable this block via
+  // an environment variable.
 }
 
 buildAll().catch((err) => {
