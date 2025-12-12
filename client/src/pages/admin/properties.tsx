@@ -1,8 +1,9 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { apiRequest } from "@/lib/queryClient";
 import { AdminLayout } from "@/components/layout/AdminLayout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Plus, Search, Filter, MoreHorizontal, Pencil, Trash2 } from "lucide-react";
+import { Plus, Search, Filter, MoreHorizontal, Pencil, Trash2, Star } from "lucide-react";
 import { Link } from "wouter";
 import {
   Table,
@@ -31,8 +32,16 @@ export default function AdminProperties() {
 
   const deleteMutation = useMutation({
     mutationFn: async (id: string) => {
-      const res = await fetch(`/api/properties/${id}`, { method: "DELETE" });
-      if (!res.ok) throw new Error("Failed to delete property");
+      await apiRequest("DELETE", `/api/properties/${id}`);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/properties"] });
+    },
+  });
+
+  const toggleFeaturedMutation = useMutation({
+    mutationFn: async ({ id, featured }: { id: string; featured: boolean }) => {
+      await apiRequest("PATCH", `/api/properties/${id}`, { featured });
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/properties"] });
@@ -97,7 +106,7 @@ export default function AdminProperties() {
                     <TableCell>
                       <div className="flex items-center gap-3">
                         <div className="w-12 h-12 rounded-md bg-gray-100 overflow-hidden">
-                          <img 
+                          <img
                             src={property.coverImage || property.images?.[0] || "/attached_assets/generated_images/modern_house_with_pool_exterior.png"}
                             className="w-full h-full object-cover"
                             alt={property.title}
@@ -110,9 +119,8 @@ export default function AdminProperties() {
                       </div>
                     </TableCell>
                     <TableCell>
-                      <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                        property.status === 'available' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'
-                      }`}>
+                      <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${property.status === 'available' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'
+                        }`}>
                         {property.status === 'available' ? 'Disponível' : 'Indisponível'}
                       </span>
                     </TableCell>
@@ -137,8 +145,15 @@ export default function AdminProperties() {
                               <Pencil className="mr-2 h-4 w-4" /> Editar
                             </DropdownMenuItem>
                           </Link>
+                          <DropdownMenuItem
+                            className="cursor-pointer"
+                            onClick={() => toggleFeaturedMutation.mutate({ id: property.id, featured: !property.featured })}
+                          >
+                            <Star className={`mr-2 h-4 w-4 ${property.featured ? "fill-yellow-400 text-yellow-400" : ""}`} />
+                            {property.featured ? "Remover Destaque" : "Destacar"}
+                          </DropdownMenuItem>
                           <DropdownMenuSeparator />
-                          <DropdownMenuItem 
+                          <DropdownMenuItem
                             className="text-red-600 cursor-pointer"
                             onClick={() => {
                               if (confirm("Tem certeza que deseja excluir este imóvel?")) {

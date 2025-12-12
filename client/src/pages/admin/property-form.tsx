@@ -5,6 +5,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { AdminLayout } from "@/components/layout/AdminLayout";
 import { Button } from "@/components/ui/button";
+import { apiRequest } from "@/lib/queryClient";
 import { getAuthToken } from "@/lib/queryClient";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -31,8 +32,7 @@ export default function AdminPropertyForm() {
     queryKey: ["/api/properties", propertyId],
     queryFn: async () => {
       if (!propertyId) return null;
-      const res = await fetch(`/api/properties/${propertyId}`);
-      if (!res.ok) throw new Error("Failed to fetch property");
+      const res = await apiRequest("GET", `/api/properties/${propertyId}`);
       return res.json();
     },
     enabled: !!propertyId,
@@ -56,7 +56,9 @@ export default function AdminPropertyForm() {
   useEffect(() => {
     if (existingProperty) {
       Object.keys(existingProperty).forEach((key) => {
-        setValue(key as keyof InsertProperty, existingProperty[key]);
+        const value = existingProperty[key];
+        // Ensure numbers are treated as strings if needed or just handle nulls
+        setValue(key as keyof InsertProperty, value);
       });
       if (existingProperty.images && existingProperty.images.length > 0) {
         setUploadedImages(existingProperty.images);
