@@ -70,7 +70,7 @@ async function buildAll() {
     platform: "node",
     bundle: true,
     format: "esm",
-    outfile: "api/index.js",
+    outfile: "dist/api/index.js",
     define: {
       "process.env.NODE_ENV": '"production"',
     },
