@@ -17,15 +17,31 @@ app.use(express.urlencoded({ extended: false }));
 const httpServer = createServer(app);
 
 let initialized = false;
+let initError: Error | null = null;
 
 async function initializeApp() {
   if (initialized) return;
-  await registerRoutes(httpServer, app);
-  initialized = true;
+  if (initError) throw initError;
+  
+  try {
+    await registerRoutes(httpServer, app);
+    initialized = true;
+  } catch (error) {
+    initError = error as Error;
+    console.error("Failed to initialize app:", error);
+    throw error;
+  }
 }
 
 export default async function handler(req: Request, res: Response) {
-  await initializeApp();
-  
-  app(req, res);
+  try {
+    await initializeApp();
+    app(req, res);
+  } catch (error) {
+    console.error("Handler error:", error);
+    res.status(500).json({ 
+      error: "Internal server error", 
+      message: error instanceof Error ? error.message : "Unknown error"
+    });
+  }
 }
