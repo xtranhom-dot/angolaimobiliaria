@@ -56,6 +56,10 @@ export default function PropertyDetails() {
     queryKey: [`/api/properties/${params.id}`],
   });
 
+  console.log(`[DEBUG Client] ID from params:`, params.id);
+  console.log(`[DEBUG Client] Property data:`, property);
+
+
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[#fafafa]">
@@ -64,10 +68,20 @@ export default function PropertyDetails() {
     );
   }
 
+  // Debug info for user/admin
   if (!property) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-[#fafafa]">
-        <div className="text-xl text-red-500">Imóvel não encontrado.</div>
+      <div className="min-h-screen flex flex-col items-center justify-center bg-[#fafafa] gap-4">
+        <div className="text-xl text-red-500 font-bold">Imóvel não encontrado</div>
+        <div className="text-sm text-gray-500 max-w-md text-center">
+          ID solicitado: <span className="font-mono bg-gray-100 px-1">{params.id}</span>
+        </div>
+        <div className="text-xs text-gray-400">
+          Por favor, verifique se o URL está correto ou tente voltar à lista de imóveis.
+        </div>
+        <Button onClick={() => window.location.href = '/properties'}>
+          Ver Lista de Imóveis
+        </Button>
       </div>
     );
   }

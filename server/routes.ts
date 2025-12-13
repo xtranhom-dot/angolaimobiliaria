@@ -51,7 +51,9 @@ export async function registerRoutes(
 
   app.get("/api/properties/:id", async (req, res) => {
     try {
+      console.log(`[DEBUG] Fetching property with ID: ${req.params.id}`);
       const property = await storage.getProperty(req.params.id);
+      console.log(`[DEBUG] Result: ${property ? "Found" : "Not Found"}`);
       if (!property) {
         return res.status(404).json({ error: "Property not found" });
       }
