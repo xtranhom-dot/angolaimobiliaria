@@ -1,4 +1,5 @@
 import { useParams, useLocation } from "wouter";
+import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import type { Property } from "@shared/schema";
 import { Header } from "@/components/layout/Header";
@@ -14,6 +15,14 @@ import { PropertyCard } from "@/components/ui/property-card";
 
 export default function PropertyDetails() {
   const params = useParams();
+
+  // Form state for contact form
+  const [formData, setFormData] = useState({
+    name: "",
+    phone: "",
+    email: "",
+    message: "Olá, gostaria de mais informações sobre este imóvel..."
+  });
 
   // Fetch current property
   const { data: property, isLoading } = useQuery<Property>({
@@ -198,19 +207,52 @@ export default function PropertyDetails() {
                     <img src="/attached_assets/generated_images/professional_real_estate_team_of_three_people.png" alt="Agent" className="w-full h-full object-cover" />
                   </div>
                   <div>
-                    <p className="font-bold text-[hsl(350,85%,15%)]">Michael Salomon</p>
+                    <p className="font-bold text-[hsl(350,85%,15%)]">Hilario Silva</p>
                     <p className="text-xs text-gray-500 uppercase tracking-widest">Corretor Senior</p>
                   </div>
                 </div>
 
-                <form className="space-y-4">
-                  <Input placeholder="Seu Nome" className="bg-gray-50 border-gray-200" />
-                  <Input placeholder="Seu Telefone" className="bg-gray-50 border-gray-200" />
-                  <Input placeholder="Seu Email" className="bg-gray-50 border-gray-200" />
-                  <Textarea placeholder="Olá, gostaria de mais informações sobre este imóvel..." className="bg-gray-50 border-gray-200 min-h-[100px]" />
+                <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
+                  <Input
+                    placeholder="Seu Nome"
+                    className="bg-gray-50 border-gray-200"
+                    value={formData.name}
+                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  />
+                  <Input
+                    placeholder="Seu Telefone"
+                    className="bg-gray-50 border-gray-200"
+                    value={formData.phone}
+                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                  />
+                  <Input
+                    placeholder="Seu Email"
+                    className="bg-gray-50 border-gray-200"
+                    value={formData.email}
+                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  />
+                  <Textarea
+                    placeholder="Olá, gostaria de mais informações sobre este imóvel..."
+                    className="bg-gray-50 border-gray-200 min-h-[100px]"
+                    value={formData.message}
+                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                  />
 
                   <div className="flex gap-2">
-                    <Button className="flex-1 bg-[#25D366] hover:bg-[#128C7E] text-white font-bold uppercase tracking-widest text-xs">
+                    <Button
+                      type="button"
+                      className="flex-1 bg-[#25D366] hover:bg-[#128C7E] text-white font-bold uppercase tracking-widest text-xs"
+                      onClick={() => {
+                        const whatsappNumber = "244953430432";
+                        const message = `Olá, sou ${formData.name || '[Nome]'}%0A%0A` +
+                          `📱 Telefone: ${formData.phone || '[Telefone]'}%0A` +
+                          `📧 Email: ${formData.email || '[Email]'}%0A%0A` +
+                          `📍 Imóvel: ${property?.title || ''}%0A` +
+                          `🔗 Link: ${window.location.href}%0A%0A` +
+                          `💬 Mensagem:%0A${formData.message || ''}`;
+                        window.open(`https://wa.me/${whatsappNumber}?text=${message}`, '_blank');
+                      }}
+                    >
                       <Phone className="w-4 h-4 mr-2" /> Whatsapp
                     </Button>
                     <Button className="flex-1 bg-[hsl(350,85%,15%)] hover:bg-[hsl(350,85%,25%)] text-white font-bold uppercase tracking-widest text-xs">
