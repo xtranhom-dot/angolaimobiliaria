@@ -51,9 +51,27 @@ export async function registerRoutes(
 
   app.get("/api/properties/:id", async (req, res) => {
     try {
-      console.log(`[DEBUG] Fetching property with ID: ${req.params.id}`);
-      const property = await storage.getProperty(req.params.id);
-      console.log(`[DEBUG] Result: ${property ? "Found" : "Not Found"}`);
+      const requestedId = req.params.id.trim();
+      console.log(`[DEBUG] GET /api/properties/:id HIT`);
+      console.log(`[DEBUG] Requested ID (raw): '${req.params.id}'`);
+      console.log(`[DEBUG] Requested ID (trimmed): '${requestedId}'`);
+
+      let property = await storage.getProperty(requestedId);
+
+      if (!property) {
+        console.log(`[DEBUG] Direct lookup failed. Trying to find property by iterating all properties to spot encoding issues...`);
+        const allProps = await storage.getProperties();
+        const found = allProps.find(p => p.id.trim() === requestedId);
+
+        if (found) {
+          console.log(`[DEBUG] Found property via manual iteration! ID matched: '${found.id}'`);
+          property = found;
+        } else {
+          console.log(`[DEBUG] Manual iteration also failed. IDs available: ${allProps.map(p => p.id).slice(0, 5).join(', ')}...`);
+        }
+      }
+
+      console.log(`[DEBUG] Final Result: ${property ? "Found" : "Not Found"}`);
       if (!property) {
         return res.status(404).json({ error: "Property not found" });
       }
