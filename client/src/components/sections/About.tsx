@@ -1,4 +1,4 @@
-import teamImage from "@assets/generated_images/professional_real_estate_team_of_three_people.png";
+const teamImage = "/assets/about-team.jpg";
 
 export function About() {
   return (
@@ -13,7 +13,7 @@ export function About() {
               Fundada em fevereiro <br className="hidden md:block" />
               de 2023 em Lisboa,
             </h2>
-            
+
             <div className="space-y-4 md:space-y-6 text-white/80 font-light leading-relaxed text-sm md:text-base">
               <p>
                 E expandindo suas operações para o Sul do Brasil em 2024, a Angola Imobiliária se estabeleceu como um ícone disruptivo de inovação e excelência no mercado imobiliário.
@@ -38,9 +38,9 @@ export function About() {
 
           <div className="relative order-1 lg:order-2 mb-8 lg:mb-0">
             <div className="absolute inset-0 bg-[#FFD700] rounded-lg transform translate-x-2 translate-y-2 md:translate-x-4 md:translate-y-4 -z-10" />
-            <img 
-              src={teamImage} 
-              alt="Equipe Angola Imobiliária" 
+            <img
+              src={teamImage}
+              alt="Equipe Angola Imobiliária"
               className="w-full rounded-lg shadow-2xl grayscale hover:grayscale-0 transition-all duration-700"
             />
           </div>
