@@ -3,6 +3,7 @@ import cors from "cors";
 import { registerRoutes } from "../server/routes.js";
 import { createServer } from "http";
 
+// Force rebuild: 2025-12-13T23:10:00Z
 const app = express();
 
 // Allow CORS and respond to preflight OPTIONS requests
