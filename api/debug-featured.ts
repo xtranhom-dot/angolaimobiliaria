@@ -2,8 +2,8 @@ import type { VercelRequest, VercelResponse } from '@vercel/node';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
     try {
-        const { db } = await import('../../server/db.js');
-        const { properties } = await import('../../shared/schema.js');
+        const { db } = await import('../server/db.js');
+        const { properties } = await import('../shared/schema.js');
         const { eq } = await import('drizzle-orm');
 
         // Get all properties
