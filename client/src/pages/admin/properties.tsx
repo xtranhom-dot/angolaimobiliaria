@@ -115,18 +115,17 @@ export default function AdminProperties() {
                         <div className="flex-1">
                           <div className="flex items-center gap-2">
                             <p className="font-medium text-gray-900">{property.title}</p>
-                            <Button
-                              variant="ghost"
-                              size="sm"
-                              className={`h-8 px-2 ${property.featured ? 'bg-yellow-100 hover:bg-yellow-200' : 'hover:bg-gray-100'}`}
+                            <button
                               onClick={() => toggleFeaturedMutation.mutate({ id: property.id, featured: !property.featured })}
+                              className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold border-2 transition-all ${property.featured
+                                  ? 'bg-yellow-400 border-yellow-500 text-black hover:bg-yellow-500'
+                                  : 'bg-white border-gray-300 text-gray-600 hover:border-yellow-400 hover:bg-yellow-50'
+                                }`}
                               title={property.featured ? "Remover Destaque" : "Destacar na Home"}
                             >
-                              <Star className={`h-4 w-4 ${property.featured ? "fill-yellow-400 text-yellow-500" : "text-gray-400"}`} />
-                              <span className="ml-1 text-xs font-medium">
-                                {property.featured ? "Destacado" : "Destacar"}
-                              </span>
-                            </Button>
+                              <Star className={`h-3.5 w-3.5 ${property.featured ? "fill-black" : ""}`} />
+                              {property.featured ? "DESTACADO" : "Destacar"}
+                            </button>
                           </div>
                           <p className="text-xs text-gray-500">{property.municipality}, {property.province}</p>
                         </div>
