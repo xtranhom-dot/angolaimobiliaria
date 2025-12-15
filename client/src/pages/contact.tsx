@@ -78,7 +78,7 @@ export default function Contact() {
   const handleSendMessage = (e: React.FormEvent) => {
     e.preventDefault();
     const { name, email, phone, subject, message } = formData;
-    
+
     if (!subject) {
       toast({
         title: "Atenção",
@@ -114,19 +114,19 @@ export default function Contact() {
   return (
     <div className="min-h-screen flex flex-col font-sans">
       <Header />
-      
+
       <main className="flex-grow">
         {/* Hero Section */}
         <div className="relative h-[40vh] min-h-[400px] flex items-center justify-center overflow-hidden">
           <div className="absolute inset-0">
-            <img 
-              src={contactHero} 
-              alt="Fale Conosco" 
+            <img
+              src={contactHero}
+              alt="Fale Conosco"
               className="w-full h-full object-cover"
             />
             <div className="absolute inset-0 bg-black/60 backdrop-blur-[2px]" />
           </div>
-          
+
           <div className="relative z-10 text-center px-4 max-w-4xl mx-auto space-y-4">
             <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl text-white font-medium">
               Entre em Contato
@@ -140,7 +140,7 @@ export default function Contact() {
         <section className="py-20 bg-white">
           <div className="container mx-auto px-4">
             <div className="grid lg:grid-cols-2 gap-16 items-start">
-              
+
               {/* Contact Information */}
               <div className="space-y-12">
                 <div>
@@ -148,7 +148,7 @@ export default function Contact() {
                   <p className="text-gray-600 leading-relaxed mb-8">
                     Tem alguma dúvida sobre nossos imóveis ou serviços? Nossa equipe está à disposição para oferecer o melhor atendimento.
                   </p>
-                  
+
                   <div className="space-y-6">
                     <div className="flex items-start gap-4">
                       <div className="bg-[#FFD700]/10 p-3 rounded-full">
@@ -184,7 +184,9 @@ export default function Contact() {
                         <h3 className="font-medium text-black text-lg">Localização</h3>
                         <p className="text-gray-600">
                           Luanda, Angola<br />
-                          Talatona, Via S8
+                          Centralidade do Sequele<br />
+                          Bloco 8, Prédio 34<br />
+                          Entrada A, Apart 002
                         </p>
                       </div>
                     </div>
@@ -213,15 +215,15 @@ export default function Contact() {
               <div className="bg-gray-50 p-8 md:p-10 rounded-2xl border border-gray-100 shadow-sm">
                 <h2 className="font-serif text-3xl text-black mb-2">Envie uma Mensagem</h2>
                 <p className="text-gray-500 mb-8">Preencha o formulário abaixo e entraremos em contato em breve.</p>
-                
+
                 <form className="space-y-6" onSubmit={handleSendMessage}>
                   <div className="space-y-4">
                     <div className="space-y-2">
                       <Label htmlFor="name">Nome Completo *</Label>
-                      <Input 
-                        id="name" 
-                        placeholder="Seu nome" 
-                        className="bg-white border-gray-200 focus:border-[#FFD700] h-12" 
+                      <Input
+                        id="name"
+                        placeholder="Seu nome"
+                        className="bg-white border-gray-200 focus:border-[#FFD700] h-12"
                         value={formData.name}
                         onChange={handleInputChange}
                         required
@@ -230,11 +232,11 @@ export default function Contact() {
 
                     <div className="space-y-2">
                       <Label htmlFor="email">Email *</Label>
-                      <Input 
-                        id="email" 
+                      <Input
+                        id="email"
                         type="email"
-                        placeholder="seu@email.com" 
-                        className="bg-white border-gray-200 focus:border-[#FFD700] h-12" 
+                        placeholder="seu@email.com"
+                        className="bg-white border-gray-200 focus:border-[#FFD700] h-12"
                         value={formData.email}
                         onChange={handleInputChange}
                         required
@@ -243,27 +245,27 @@ export default function Contact() {
 
                     <div className="space-y-2">
                       <Label htmlFor="phone">Telefone</Label>
-                      <Input 
-                        id="phone" 
-                        placeholder="+244 9XX XXX XXX" 
-                        className="bg-white border-gray-200 focus:border-[#FFD700] h-12" 
+                      <Input
+                        id="phone"
+                        placeholder="+244 9XX XXX XXX"
+                        className="bg-white border-gray-200 focus:border-[#FFD700] h-12"
                         value={formData.phone}
                         onChange={handleInputChange}
                       />
                     </div>
                   </div>
-                  
+
                   <div className="space-y-3">
                     <Label>Assunto *</Label>
                     <div className="grid grid-cols-3 gap-4">
                       {subjects.map((subject) => (
-                        <div 
+                        <div
                           key={subject.id}
                           onClick={() => handleSubjectSelect(subject.id)}
                           className={cn(
                             "cursor-pointer rounded-xl border-2 p-4 flex flex-col items-center justify-center gap-2 transition-all hover:border-[#FFD700]/50 hover:bg-[#FFD700]/5",
-                            formData.subject === subject.id 
-                              ? "border-[#FFD700] bg-[#FFD700]/10 text-black" 
+                            formData.subject === subject.id
+                              ? "border-[#FFD700] bg-[#FFD700]/10 text-black"
                               : "border-gray-100 bg-white text-gray-500"
                           )}
                         >
@@ -279,17 +281,17 @@ export default function Contact() {
 
                   <div className="space-y-2">
                     <Label htmlFor="message">Mensagem</Label>
-                    <Textarea 
-                      id="message" 
-                      placeholder="Conte-nos o que você procura..." 
-                      className="bg-white border-gray-200 focus:border-[#FFD700] min-h-[120px]" 
+                    <Textarea
+                      id="message"
+                      placeholder="Conte-nos o que você procura..."
+                      className="bg-white border-gray-200 focus:border-[#FFD700] min-h-[120px]"
                       value={formData.message}
                       onChange={handleInputChange}
                     />
                   </div>
 
-                  <Button 
-                    type="submit" 
+                  <Button
+                    type="submit"
                     className="w-full bg-black hover:bg-black/90 text-white font-medium py-6 text-lg rounded-xl shadow-lg shadow-black/10"
                     disabled={createMessageMutation.isPending}
                   >
@@ -305,17 +307,17 @@ export default function Contact() {
 
         {/* Map Placeholder or Additional Info */}
         <section className="h-[400px] w-full bg-gray-200 relative">
-           {/* In a real app, this would be a Google Maps embed */}
-           <div className="absolute inset-0 flex items-center justify-center bg-gray-100">
-             <div className="text-center">
-               <MapPin className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-               <p className="text-gray-500 font-medium">Mapa de Localização</p>
-               <p className="text-gray-400 text-sm">Luanda, Talatona</p>
-             </div>
-           </div>
+          {/* In a real app, this would be a Google Maps embed */}
+          <div className="absolute inset-0 flex items-center justify-center bg-gray-100">
+            <div className="text-center">
+              <MapPin className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+              <p className="text-gray-500 font-medium">Mapa de Localização</p>
+              <p className="text-gray-400 text-sm">Centralidade do Sequele, Bloco 8</p>
+            </div>
+          </div>
         </section>
       </main>
-      
+
       <Footer />
     </div>
   );
