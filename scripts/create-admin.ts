@@ -13,8 +13,8 @@ async function hashPassword(password: string) {
 }
 
 async function createAdmin() {
-  const email = "imobiliarioangola@admin.com";
-  const password = "Imobiliario909192";
+  const email = process.env.CREATE_ADMIN_EMAIL || "imobiliarioangola@admin.com";
+  const password = process.env.CREATE_ADMIN_PASSWORD || "Imobiliario909192";
   const hashedPassword = await hashPassword(password);
   const id = randomUUID();
 

@@ -2,6 +2,8 @@ import { QueryClient, QueryFunction } from "@tanstack/react-query";
 
 const TOKEN_KEY = "auth_token";
 
+const API_BASE = (import.meta as any).env?.VITE_API_BASE || "https://angolaimobiliaria.vercel.app";
+
 export function getAuthToken(): string | null {
   return localStorage.getItem(TOKEN_KEY);
 }
@@ -39,7 +41,9 @@ export async function apiRequest(
     ...(data ? { "Content-Type": "application/json" } : {}),
   };
 
-  const res = await fetch(url, {
+  const fullUrl = url.startsWith("http") ? url : API_BASE.replace(/\/$/, "") + (url.startsWith("/") ? url : "/" + url);
+
+  const res = await fetch(fullUrl, {
     method,
     headers,
     body: data ? JSON.stringify(data) : undefined,
@@ -55,7 +59,9 @@ export const getQueryFn: <T>(options: {
 }) => QueryFunction<T> =
   ({ on401: unauthorizedBehavior }) =>
   async ({ queryKey }) => {
-    const res = await fetch(queryKey.join("/") as string, {
+    const path = queryKey.join("/");
+    const fullUrl = path.startsWith("http") ? path : API_BASE.replace(/\/$/, "") + (path.startsWith("/") ? path : "/" + path);
+    const res = await fetch(fullUrl, {
       headers: getAuthHeaders(),
     });
 
