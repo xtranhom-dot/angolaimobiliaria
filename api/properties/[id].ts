@@ -1,4 +1,5 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
+import jwt from 'jsonwebtoken';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
     const { id } = req.query;
@@ -58,7 +59,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
                 }
 
                 const token = auth.substring(7);
-                const jwt = await import('jsonwebtoken');
                 const SECRET = process.env.SESSION_SECRET || 'fallback-secret-key';
                 try {
                     jwt.verify(token, SECRET);
