@@ -265,7 +265,7 @@ export async function registerRoutes(
   // Sitemap endpoint (dynamic). Set SITE_URL env var to production domain (e.g. https://www.example.com)
   app.get('/sitemap.xml', async (_req, res) => {
     try {
-      const siteUrl = process.env.SITE_URL || `http://localhost:${process.env.PORT || 5000}`;
+      const siteUrl = process.env.SITE_URL || 'https://angolaimobiliaria.vercel.app';
 
       const escapeXml = (str: string) =>
         String(str)
