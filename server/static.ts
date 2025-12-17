@@ -10,6 +10,16 @@ export function serveStatic(app: Express) {
     );
   }
 
+  // Serve sitemap.xml with correct Content-Type before static middleware
+  app.get("/sitemap.xml", (_req, res) => {
+    res.header("Content-Type", "application/xml").sendFile(path.resolve(distPath, "sitemap.xml"));
+  });
+
+  // Serve robots.txt with correct Content-Type
+  app.get("/robots.txt", (_req, res) => {
+    res.header("Content-Type", "text/plain").sendFile(path.resolve(distPath, "robots.txt"));
+  });
+
   app.use(express.static(distPath));
 
   // fall through to index.html if the file doesn't exist

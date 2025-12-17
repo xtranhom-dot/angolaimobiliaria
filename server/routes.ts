@@ -263,6 +263,7 @@ export async function registerRoutes(
   });
 
   // Sitemap endpoint (dynamic). Set SITE_URL env var to production domain (e.g. https://www.example.com)
+  // NOTE: This endpoint is used only in development. In production, a static sitemap.xml is served from client/public
   app.get('/sitemap.xml', async (_req, res) => {
     try {
       const siteUrl = process.env.SITE_URL || 'https://angolaimobiliaria.vercel.app';
